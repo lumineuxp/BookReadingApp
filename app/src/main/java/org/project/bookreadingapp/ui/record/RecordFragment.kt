@@ -30,6 +30,8 @@ import java.io.IOException
 
 class RecordFragment : Fragment() {
 
+    //เทสสึโอกะ
+
     // Initializing all variables..
     private var startTV: TextView? = null
     private var stopTV: TextView? = null
