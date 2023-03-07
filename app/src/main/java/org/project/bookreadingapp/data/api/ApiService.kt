@@ -1,9 +1,7 @@
 package org.project.bookreadingapp.data.api
 
 import okhttp3.OkHttpClient
-import org.project.bookreadingapp.data.Embed
-import org.project.bookreadingapp.data.Tales
-import org.project.bookreadingapp.data.Wav
+import org.project.bookreadingapp.data.*
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -22,12 +20,14 @@ interface ApiService {
     @POST("/api-embed")
     fun getEmbed(@Body wav: Wav): Call<Embed>
 
+    @POST("api-synthesize-tale")
+    fun getSynVoice(@Body taleEmbed: TaleEmbed):Call<TaleWithSynVoice>
 
 
     companion object{
 
         val client: OkHttpClient = OkHttpClient.Builder()
-            .readTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(120, TimeUnit.SECONDS)
             .build()
         operator fun invoke():ApiService {
             return Retrofit.Builder()
