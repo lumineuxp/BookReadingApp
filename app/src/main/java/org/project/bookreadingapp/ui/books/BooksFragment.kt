@@ -27,7 +27,7 @@ class BooksFragment : Fragment() {
     lateinit var myAdapter: MyAdapter
     lateinit var linearLayoutManager: LinearLayoutManager
     lateinit var TaleList:List<Tales>
-    private lateinit var manager: RecyclerView.LayoutManager
+    //private lateinit var manager: RecyclerView.LayoutManager
 
 
     private val binding get() = _binding!!
@@ -43,8 +43,8 @@ class BooksFragment : Fragment() {
         _binding = FragmentBooksBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-
         val recyclerview:RecyclerView = binding.recyclerView
+        recyclerview.setHasFixedSize(true)
         linearLayoutManager = LinearLayoutManager(requireContext())
         recyclerview.layoutManager = linearLayoutManager
 
@@ -52,7 +52,7 @@ class BooksFragment : Fragment() {
         val calls = apiService.getTales()
         calls.enqueue(object : Callback<List<Tales>>{
             override fun onResponse(call: Call<List<Tales>>, response: Response<List<Tales>>) {
-                if (response.isSuccessful){
+                if(response.isSuccessful){
                     val responseBody = response.body()!!
                     myAdapter = MyAdapter(requireContext(),responseBody)
                     myAdapter.notifyDataSetChanged()
@@ -66,16 +66,6 @@ class BooksFragment : Fragment() {
         return root
     }
 
-
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//
-//    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
