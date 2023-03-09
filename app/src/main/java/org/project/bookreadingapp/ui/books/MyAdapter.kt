@@ -13,14 +13,14 @@ import org.project.bookreadingapp.data.Tales
 
 
 
-class MyAdapter(val context:Context, val TaleList:List<Tales>) : RecyclerView.Adapter<MyAdapter.ViewHolder>() {
+class MyAdapter(val context: Context, val TaleList:List<Tales>) : RecyclerView.Adapter<MyAdapter.ViewHolder>() {
 
     class ViewHolder(itemView:View): RecyclerView.ViewHolder(itemView) {
         internal val imageView :ImageView
         internal val name :TextView
 
         init {
-            name = itemView.findViewById(R.id.Name)
+            name = itemView.findViewById(R.id.titleTxt)
             imageView = itemView.findViewById(R.id.imgView)
         }
 
