@@ -148,6 +148,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:background="@drawable/circle_button"
+        android:contentDescription="recordingButton"
         android:src="@drawable/ic_baseline_mic_red_65"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
