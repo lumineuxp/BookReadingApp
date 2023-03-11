@@ -25,9 +25,10 @@ class BooksFragment : Fragment() {
     private var _binding: FragmentBooksBinding? = null
     lateinit private var apiService: ApiService
     lateinit var myAdapter: MyAdapter
-    lateinit var linearLayoutManager: LinearLayoutManager
+    lateinit var linearLayoutManager: RecyclerView.LayoutManager
     lateinit var TaleList:List<Tales>
     //private lateinit var manager: RecyclerView.LayoutManager
+    //val recyclerview:RecyclerView = binding.recyclerView
 
 
     private val binding get() = _binding!!
@@ -43,28 +44,37 @@ class BooksFragment : Fragment() {
         _binding = FragmentBooksBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+
+        //create recyclerview and display data on books
         val recyclerview:RecyclerView = binding.recyclerView
-        recyclerview.setHasFixedSize(true)
         linearLayoutManager = LinearLayoutManager(requireContext())
-        recyclerview.layoutManager = linearLayoutManager
 
         val apiService = ApiService()
-        val calls = apiService.getTales()
-        calls.enqueue(object : Callback<List<Tales>>{
+        val calling = apiService.getTales()
+
+        calling.enqueue(object : Callback<List<Tales>>{
             override fun onResponse(call: Call<List<Tales>>, response: Response<List<Tales>>) {
-                if(response.isSuccessful){
-                    val responseBody = response.body()!!
-                    myAdapter = MyAdapter(requireContext(),responseBody)
-                    myAdapter.notifyDataSetChanged()
-                    recyclerview.adapter = myAdapter
-                }
+              if (response.isSuccessful){
+                  recyclerview.apply {
+                      layoutManager = linearLayoutManager
+                      myAdapter = MyAdapter(requireContext(),response.body()!!)
+                      myAdapter.notifyDataSetChanged()
+                      adapter = myAdapter
+                  }
+              }
             }
+
             override fun onFailure(call: Call<List<Tales>>, t: Throwable) {
                 Log.e("API","Fail : "+ t.message)
             }
+
         })
+
+
         return root
     }
+
+
 
 
     override fun onDestroyView() {
