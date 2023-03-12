@@ -28,7 +28,7 @@ import org.project.bookreadingapp.databinding.FragmentRecordBinding
 import java.io.IOException
 
 
-class RecordFragment : Fragment() {
+class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
 
     // Initializing all variables..
     private var startTV: TextView? = null
@@ -122,15 +122,16 @@ class RecordFragment : Fragment() {
         startTV?.setOnClickListener { // start recording method will
             // start the recording of audio.
             startTV?.visibility = View.GONE
-            stopTV?.visibility = View.VISIBLE
+//            stopTV?.visibility = View.VISIBLE
+            playTV?.visibility = View.VISIBLE
             startRecording()
         }
-        stopTV?.setOnClickListener { // pause Recording method will
-            // pause the recording of audio.
-            stopTV?.visibility = View.GONE
-            playTV?.visibility = View.VISIBLE
-            pauseRecording()
-        }
+//        stopTV?.setOnClickListener { // pause Recording method will
+//            // pause the recording of audio.
+//            stopTV?.visibility = View.GONE
+//            playTV?.visibility = View.VISIBLE
+//            pauseRecording()
+//        }
         playTV?.setOnClickListener { // play audio method will play
             // the audio which we have recorded
             playTV?.visibility = View.GONE
@@ -200,6 +201,8 @@ class RecordFragment : Fragment() {
             // audio encoder for our recorded audio.
             mRecorder?.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
 
+            mRecorder?.setMaxDuration(10000)
+
             // below method is used to set the
             // output file location for our recorded audio
             mRecorder?.setOutputFile(mFileName)
@@ -214,6 +217,13 @@ class RecordFragment : Fragment() {
             // the audio recording.
             mRecorder?.start()
             statusTV?.text = "Recording Started"
+
+            mRecorder?.setOnInfoListener(this)
+
+//            mRecorder?.release()
+//            mRecorder = null
+//            statusTV?.text = "Recording Stopped"
+
         } else {
             // if audio recording permissions are
             // not granted by user below method will
@@ -221,6 +231,14 @@ class RecordFragment : Fragment() {
             RequestPermissions()
         }
 
+    }
+
+    override fun onInfo(mRecorder: MediaRecorder, what: Int, p2: Int) {
+        if (what == MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED) {
+            mRecorder?.stop()
+            mRecorder?.release()
+            statusTV?.text = "Recording Stopped"
+        }
     }
 
     internal fun onRequestPermissionsResult(
@@ -330,22 +348,22 @@ class RecordFragment : Fragment() {
         }
     }
 
-    fun pauseRecording() {
-        stopTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.gray))
-        startTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.purple_200))
-        playTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.purple_200))
-        stopplayTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.purple_200))
-
-        // below method will stop
-        // the audio recording.
-        mRecorder?.stop()
-
-        // below method will release
-        // the media recorder class.
-        mRecorder?.release()
-        mRecorder = null
-        statusTV?.text = "Recording Stopped"
-    }
+//    fun pauseRecording() {
+//        stopTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.gray))
+//        startTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.purple_200))
+//        playTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.purple_200))
+//        stopplayTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.purple_200))
+//
+//        // below method will stop
+//        // the audio recording.
+//        mRecorder?.stop()
+//
+//        // below method will release
+//        // the media recorder class.
+//        mRecorder?.release()
+//        mRecorder = null
+//        statusTV?.text = "Recording Stopped"
+//    }
 
     fun pausePlaying() {
         // this method will release the media player
@@ -365,4 +383,5 @@ class RecordFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }
