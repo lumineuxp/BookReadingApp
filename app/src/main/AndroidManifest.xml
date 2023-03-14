@@ -26,6 +26,9 @@
             android:label="Contact Us"
             android:parentActivityName=".MainActivity" />
         <activity
+            android:name=".Storybooks"
+            android:exported="false"/>
+        <activity
             android:name=".Help"
             android:exported="false"
             android:label="Help"
