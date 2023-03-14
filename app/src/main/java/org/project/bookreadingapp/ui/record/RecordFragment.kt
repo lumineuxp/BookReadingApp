@@ -23,10 +23,18 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import org.project.bookreadingapp.MainActivity
+import org.project.bookreadingapp.data.Embed
+import org.project.bookreadingapp.data.Wav
+import org.project.bookreadingapp.data.api.ApiService
 //import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import org.project.bookreadingapp.databinding.FragmentRecordBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.IOException
-
+import java.util.*
+import android.util.Base64
+import java.io.File
 
 class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
 
@@ -36,6 +44,7 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
     private var playTV: TextView? = null
     private var stopplayTV: TextView? = null
     private var statusTV: TextView? = null
+    private var playBase64: ImageButton? = null
 
     // creating a variable for media recorder object class.
     private var mRecorder: MediaRecorder? = null
@@ -48,6 +57,9 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
 
     // constant for storing audio permission
     val REQUEST_AUDIO_PERMISSION_CODE = 1
+
+    //create wav base64
+    private var wavBase64 : String? = null
 
 //    override fun onCreate(savedInstanceState: Bundle?) {
 //        super.onCreate(savedInstanceState)
@@ -105,6 +117,8 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
         val stopTV: ImageButton = binding.recordingBtn
         val playTV: ImageButton = binding.playBtn
         val stopplayTV: ImageButton = binding.stopBtn
+
+        playBase64 = binding.playBtn2
 //        stopTV!!.setBackgroundColor(808080)
 //        playTV!!.setBackgroundColor(808080)
 //        stopplayTV!!.setBackgroundColor(808080)
@@ -145,13 +159,80 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
             pausePlaying()
         }
 
-
-
-
-
+        playBase64?.setOnClickListener { // play audio method will play
+            // the audio which we have recorded
+            playBase64?.visibility = View.GONE
+            playAudioBase64()
+        }
 
 
         return root
+    }
+
+    private fun playAudioBase64() {
+        var wav = Wav()
+        wav.wav = wavBase64
+
+        val exSynPath = "/sdcard/MyApp/audio/example.mp3"
+        val apiService = ApiService()
+        val call = apiService.getEmbed(wav)
+
+        call.enqueue(object: Callback<Embed> {
+
+            override fun onResponse(call: Call<Embed>, response: Response<Embed>) {
+                if (response.isSuccessful) {
+                    var jsonEmbed = response.body() // Use it or ignore it
+                    Log.i("API Get Embed", jsonEmbed?.exSynVoice.toString());
+                    val synvoiceBase64 = jsonEmbed!!.exSynVoice
+                    Toast.makeText(context, "Successfully.", Toast.LENGTH_SHORT).show()
+
+                    convertBase64ToAudio(synvoiceBase64, exSynPath)
+
+                    playMedia(exSynPath)
+
+                } else {
+                    Log.e("API Get Embed" , response.toString())
+
+                }
+            }
+
+            override fun onFailure(call: Call<Embed>, t: Throwable) {
+                Log.e("API Get Embed" , t.message + " "+ t.cause)
+                playBase64?.visibility = View.VISIBLE
+            }
+        })
+
+
+    }
+
+    private fun convertBase64ToAudio(base64String: String, filePath: String) {
+        val audioData = Base64.decode(base64String, Base64.DEFAULT)
+        val file = File(filePath)
+        file.parentFile.mkdirs()
+        file.writeBytes(audioData)
+    }
+    private fun convertAudioToBase64(filePath: String): String {
+        val file = File(filePath)
+        val audioData = file.readBytes()
+        return Base64.encodeToString(audioData, Base64.DEFAULT)
+    }
+
+    private fun playMedia(filePath: String){
+        mPlayer = MediaPlayer()
+        try {
+            // below method is used to set the
+            // data source which will be our file name
+            mPlayer?.setDataSource(filePath)
+
+            // below method will prepare our media player
+            mPlayer?.prepare()
+
+            // below method will start our media player.
+            mPlayer?.start()
+
+        } catch (e: IOException) {
+            Log.e("TAG", e.toString())
+        }
     }
 
     private fun startRecording() {
@@ -219,6 +300,7 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
             statusTV?.text = "Recording Started"
 
             mRecorder?.setOnInfoListener(this)
+
 
 //            mRecorder?.release()
 //            mRecorder = null
@@ -331,21 +413,25 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
 
         // for playing our recorded audio
         // we are using media player class.
-        mPlayer = MediaPlayer()
-        try {
-            // below method is used to set the
-            // data source which will be our file name
-            mPlayer?.setDataSource(mFileName)
+        Log.i("file name", mFileName.toString())
+        playMedia(mFileName.toString())
 
-            // below method will prepare our media player
-            mPlayer?.prepare()
-
-            // below method will start our media player.
-            mPlayer?.start()
-            statusTV?.text = "Recording Started Playing"
-        } catch (e: IOException) {
-            Log.e("TAG", "prepare() failed")
-        }
+        wavBase64 = convertAudioToBase64(mFileName.toString())
+        Log.i("base64", wavBase64!!)
+//        try {
+//            // below method is used to set the
+//            // data source which will be our file name
+//            mPlayer?.setDataSource(mFileName)
+//
+//            // below method will prepare our media player
+//            mPlayer?.prepare()
+//
+//            // below method will start our media player.
+//            mPlayer?.start()
+//            statusTV?.text = "Recording Started Playing"
+//        } catch (e: IOException) {
+//            Log.e("TAG", "prepare() failed")
+//        }
     }
 
 //    fun pauseRecording() {
