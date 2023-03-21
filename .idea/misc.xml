@@ -3,7 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/layout/fragment_record.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/drawable/ic_baseline_menu_book_24.xml" value="0.2555" />
+        <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/drawable/ic_baseline_record_voice_over_24.xml" value="0.2555" />
+        <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/drawable/ic_baseline_record_voice_over_purple_40.xml" value="0.1385" />
+        <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/drawable/ic_baseline_replay_24.xml" value="0.2555" />
+        <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/drawable/ic_baseline_voice_chat_24.xml" value="0.2555" />
+        <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/layout/activity_help.xml" value="0.25" />
+        <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/layout/fragment_books.xml" value="0.25" />
+        <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/layout/fragment_record.xml" value="0.23346303501945526" />
+        <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25" />
       </map>
     </option>
   </component>
