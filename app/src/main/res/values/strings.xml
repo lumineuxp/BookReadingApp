@@ -14,6 +14,8 @@
     <string name="stop_playing">Stop Playing</string>
     <string name="status">Status</string>
 
+    <string name="text_example_thai">เมื่อได้ยินเสียงไก่ขันหนูนิดรีบลุกขึ้นทันที จัดการเก็บที่นอน พับผ้าห่มให้เป็นระเบียบเรียบร้อย และรีบอาบน้ำล้างหน้าแปรงฟัน \n ทำความสะอาดร่างกาย จะได้ใส่ชุดนักเรียน \n ซึ่งคุณแม่แขวนเตรียมไว้</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

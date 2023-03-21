@@ -38,7 +38,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="ตัวอย่างประโยคที่จะให้ user อ่าน \n เช่น เช้าฟาดผัดฟัก เย็นฟาดหมูทะไป จบ ๆ \n อะฮัลโหล ยู้ฮูววว"
+                android:fontFamily="@font/itim"
+                android:text="@string/text_example_thai"
                 android:textAlignment="center"
                 android:textSize="18sp" />
         </androidx.cardview.widget.CardView>
