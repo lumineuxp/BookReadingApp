@@ -1,14 +1,13 @@
 package org.project.bookreadingapp.ui.record
 
-import android.Manifest
 import android.Manifest.permission.RECORD_AUDIO
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 //import android.R
-import android.content.Context
 import android.content.pm.PackageManager
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,12 +16,10 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import org.project.bookreadingapp.MainActivity
+import org.project.bookreadingapp.R
 //import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import org.project.bookreadingapp.databinding.FragmentRecordBinding
 import java.io.IOException
@@ -36,6 +33,8 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
     private var playTV: TextView? = null
     private var stopplayTV: TextView? = null
     private var statusTV: TextView? = null
+    private var isRecording: Boolean = false
+    private var isPlaying : Boolean = false
 
     // creating a variable for media recorder object class.
     private var mRecorder: MediaRecorder? = null
@@ -96,21 +95,18 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
             textView.text = it
         }
 
-        //อันเก่า
-        //val recordButton: ImageButton = binding.recordBtn
-
         // initialize all variables with their layout items.
-//        val statusTV: TextView = binding.idTVstatus
+        val statusTV: TextView = binding.idTVstatus
         val startTV: ImageButton = binding.recordBtn
-        val stopTV: ImageButton = binding.recordingBtn
+        //val recordingTV: ImageButton = binding.recordingBtn
         val playTV: ImageButton = binding.playBtn
         val stopplayTV: ImageButton = binding.stopBtn
+        val playOrg: ImageButton = binding.playOrgBtn
+        val recordAgain: ImageButton = binding.recAgainBtn
 //        stopTV!!.setBackgroundColor(808080)
 //        playTV!!.setBackgroundColor(808080)
 //        stopplayTV!!.setBackgroundColor(808080)
-        stopTV.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.gray))
-        playTV.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.gray))
-        stopplayTV.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.gray))
+        //recordingTV.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.gray))
 
 //        recordButton.setOnClickListener {
 //            recordButton.visibility = View.GONE
@@ -118,38 +114,94 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
 ////            startActivity(intent)
 //        }
 
-
         startTV?.setOnClickListener { // start recording method will
             // start the recording of audio.
-            startTV?.visibility = View.GONE
-//            stopTV?.visibility = View.VISIBLE
-            playTV?.visibility = View.VISIBLE
-            startRecording()
+//            startTV?.visibility = View.GONE
+//            recordingTV?.visibility = View.VISIBLE
+            if(isRecording){
+                //startTV?.isEnabled = false
+                startTV.isClickable = false
+                //stop record
+                //pauseRecording()
+                startTV.setImageResource(R.drawable.ic_baseline_mic_gray_65)
+                //isRecording = false
+            }else{
+                //start record
+                object : CountDownTimer(10000, 10000) {
+
+                    override fun onTick(millisUntilFinished: Long) {
+                        //เผื่อได้ใช้
+                        //เดี๋ยวลองเอา progress bar มาใช้ตรงนี้ อย่า ลืม นะ!!
+//                    mTextField.setText("seconds remaining: " + millisUntilFinished / 1000)
+
+                    }
+
+                    override fun onFinish() {
+                        //เผื่อใช้
+//                    mTextField.setText("done!")
+                        statusTV?.setText("Recording Stopped")
+                        //recordingTV?.visibility = View.GONE
+                        playTV?.visibility = View.VISIBLE
+                        playOrg?.visibility = View.VISIBLE
+                        recordAgain?.visibility = View.VISIBLE
+                    }
+                }.start()
+
+                startRecording()
+                startTV.setImageResource(R.drawable.ic_baseline_mic_red_65)
+                isRecording = true
+            }
         }
+
 //        stopTV?.setOnClickListener { // pause Recording method will
 //            // pause the recording of audio.
 //            stopTV?.visibility = View.GONE
 //            playTV?.visibility = View.VISIBLE
 //            pauseRecording()
 //        }
+
+        playOrg?.setOnClickListener {
+            // play original voice from user
+            //ยังทำให้ปุ่มเปลี่ยนกลับเป็นสีเทาหลังเล่นเสียงครบ 10 วิไม่ได้
+            if (!isPlaying && mFileName != null){
+                isPlaying = true
+                playOrg.setImageResource(R.drawable.ic_baseline_record_voice_over_purple_40)
+                playAudio()
+
+            }else{
+                isPlaying = false
+                playOrg.setImageResource(R.drawable.ic_baseline_record_voice_over_24)
+                pausePlaying()
+            }
+        }
+
         playTV?.setOnClickListener { // play audio method will play
             // the audio which we have recorded
+            // ปุ่ม play อันกลาง (playTV) ที่จะเอาไว้ใช้เล่นเสียงที่สังเคราะห์แล้ว
+            // แต่ตอนนี้ให้มันเล่นเสียงที่อัดไป (method playAudio()) อันนี้แก้ได้เยยคับ
             playTV?.visibility = View.GONE
             stopplayTV?.visibility = View.VISIBLE
             playAudio()
         }
+
         stopplayTV?.setOnClickListener { // pause play method will
             // pause the play of audio
             stopplayTV?.visibility = View.GONE
-            startTV?.visibility = View.VISIBLE
+            playTV?.visibility = View.VISIBLE
             pausePlaying()
         }
 
+        recordAgain?.setOnClickListener {
+            // back to the beginning กลับไปเริ่มอัดใหม่ อุอิ
+            // ค่อนข้างจะมั่วซั่ว อาจเจอบัคได้ นี่คือคำเตือน 555555555555555
+            playTV?.visibility = View.GONE
+            stopplayTV?.visibility = View.GONE
+            playOrg?.visibility = View.GONE
+            recordAgain?.visibility = View.GONE
+            startTV?.visibility = View.VISIBLE
+        }
 
-
-
-
-
+        //เว้นไว้เตะบอล ... ล้อเล่น
 
         return root
     }
@@ -163,7 +215,6 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
             // setbackgroundcolor method will change
             // the background color of text view.
 
-
             //เดี๋ยวใช้
             //val context: Context = getApplicationContext()
             //stopTV!!.setBackgroundColor(ContextCompat.getColor(context,
@@ -174,11 +225,11 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
 //            playTV?.setBackgroundColor(808080)
 //            stopplayTV?.setBackgroundColor(808080)
 
-            val statusTV: TextView = binding.idTVstatus
-            stopTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.purple_200))
-            startTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.gray))
-            playTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.gray))
-            stopplayTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.gray))
+//            val statusTV: TextView = binding.idTVstatus
+//            stopTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.purple_200))
+//            startTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.gray))
+//            playTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.gray))
+//            stopplayTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.gray))
 
             // we are here initializing our filename variable
             // with the path of the recorded audio file.
@@ -324,10 +375,10 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
     }
 
     fun playAudio() {
-        stopTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.gray))
-        startTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.purple_200))
-        playTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.gray))
-        stopplayTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.purple_200))
+//        stopTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.gray))
+//        startTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.purple_200))
+//        playTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.gray))
+//        stopplayTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.purple_200))
 
         // for playing our recorded audio
         // we are using media player class.
@@ -348,22 +399,25 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
         }
     }
 
-//    fun pauseRecording() {
-//        stopTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.gray))
-//        startTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.purple_200))
-//        playTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.purple_200))
-//        stopplayTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.purple_200))
-//
-//        // below method will stop
-//        // the audio recording.
-//        mRecorder?.stop()
-//
-//        // below method will release
-//        // the media recorder class.
-//        mRecorder?.release()
-//        mRecorder = null
-//        statusTV?.text = "Recording Stopped"
-//    }
+    //จะได้ใช้ไหมเดี๋ยวจะดูอีกที
+    //แต่อาจจะไม่ใช้แล้ว เพราะบังคับให้อัด 10 วิรวดเดียวแบบไม่กดหยุดไปเลย
+    //ชั้นบังคับ TvT ห้ามกดหยุด ม่ายยย
+    fun pauseRecording() {
+        stopTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.gray))
+        startTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.purple_200))
+        playTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.purple_200))
+        stopplayTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.purple_200))
+
+        // below method will stop
+        // the audio recording.
+        mRecorder?.stop()
+
+        // below method will release
+        // the media recorder class.
+        mRecorder?.release()
+        mRecorder = null
+        statusTV?.text = "Recording Stopped"
+    }
 
     fun pausePlaying() {
         // this method will release the media player
