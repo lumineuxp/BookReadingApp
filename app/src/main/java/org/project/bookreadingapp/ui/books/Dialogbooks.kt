@@ -1,10 +1,8 @@
-package org.project.bookreadingapp
+package org.project.bookreadingapp.ui.books
 
-import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import org.project.bookreadingapp.R
 
 class Dialogbooks : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
