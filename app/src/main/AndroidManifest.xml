@@ -31,6 +31,9 @@
             android:label="Contact Us"
             android:parentActivityName=".MainActivity" />
         <activity
+            android:name=".Storybooks"
+            android:exported="false"/>
+        <activity
             android:name=".Help"
             android:exported="false"
             android:label="Help"
@@ -50,6 +53,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
