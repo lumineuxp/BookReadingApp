@@ -3,8 +3,6 @@ package org.project.bookreadingapp.ui.books
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,9 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import org.project.bookreadingapp.Dialogbooks
 import org.project.bookreadingapp.R
-import org.project.bookreadingapp.Storybooks
 import org.project.bookreadingapp.data.Tales
 
 
@@ -62,7 +58,7 @@ class MyAdapter(val context: Context, val TaleList:List<Tales>) : RecyclerView.A
 
             val dialog_btn = dialog.findViewById<Button>(R.id.dialog_Btn)
             dialog_btn.setOnClickListener {
-                var t:Intent = Intent(context,Storybooks::class.java)
+                var t = Intent(context, Storybooks::class.java)
                     t.putExtra("name",name)
                     t.putExtra("story",story)
                     t.putExtra("image",imageView)
