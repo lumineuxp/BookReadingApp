@@ -27,7 +27,7 @@ interface ApiService {
     companion object{
 
         val client: OkHttpClient = OkHttpClient.Builder()
-            .readTimeout(120, TimeUnit.SECONDS)
+            .readTimeout(300, TimeUnit.SECONDS)
             .build()
         operator fun invoke():ApiService {
             return Retrofit.Builder()

@@ -47,8 +47,8 @@
 
             <TextView
                 android:id="@+id/story_tale"
-                android:layout_width="383dp"
-                android:layout_height="331dp"
+                android:layout_width="381dp"
+                android:layout_height="328dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="23dp"
@@ -58,11 +58,11 @@
                 app:layout_constraintHorizontal_bias="0.518"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/story_img"
-                tools:text="Hello world" />
+                tools:text="A MONKEY perched upon a lofty tree saw some Fishermen casting their nets into a river, and narrowly watched their proceedings.The Fishermen after a while gave up fishing, and on going home to dinner left their nets upon the bank." />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="75dp"
+                android:layout_width="372dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <ImageButton
@@ -76,11 +76,20 @@
 
                 <ImageButton
                     android:id="@+id/saveFile"
-                    android:layout_width="169dp"
+                    android:layout_width="124dp"
                     android:layout_height="match_parent"
                     android:background="@null"
                     android:contentDescription="save button"
                     app:srcCompat="@drawable/save_blue" />
+
+                <ImageButton
+                    android:id="@+id/NextButton"
+                    android:layout_width="115dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="next button"
+                    app:srcCompat="@drawable/next_blue" />
+
             </LinearLayout>
         </LinearLayout>
 

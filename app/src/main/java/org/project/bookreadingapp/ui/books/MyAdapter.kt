@@ -42,6 +42,8 @@ class MyAdapter(val context: Context, val TaleList:List<Tales>) : RecyclerView.A
         var name:String = TaleList.get(position).title
         holder.name.text = name
 
+        var id:Int = TaleList.get(position).tald_id
+
         var story:String = TaleList.get(position).story
 
         var imageView:String = TaleList.get(position).cover
@@ -59,6 +61,7 @@ class MyAdapter(val context: Context, val TaleList:List<Tales>) : RecyclerView.A
             val dialog_btn = dialog.findViewById<Button>(R.id.dialog_Btn)
             dialog_btn.setOnClickListener {
                 var t = Intent(context, Storybooks::class.java)
+                    t.putExtra("id",id)
                     t.putExtra("name",name)
                     t.putExtra("story",story)
                     t.putExtra("image",imageView)
