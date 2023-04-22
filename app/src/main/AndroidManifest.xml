@@ -20,19 +20,16 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".Dialogbooks"
+            android:name=".ui.books.Dialogbooks"
             android:exported="false" />
         <activity
-            android:name=".Storybooks"
+            android:name=".ui.books.Storybooks"
             android:exported="false" />
         <activity
             android:name=".Contact"
             android:exported="false"
             android:label="Contact Us"
             android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".Storybooks"
-            android:exported="false"/>
         <activity
             android:name=".Help"
             android:exported="false"
