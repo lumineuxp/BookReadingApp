@@ -20,6 +20,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="8dp"
+            android:fontFamily="@font/itim"
             android:textAlignment="center"
             android:textSize="20sp" />
 
@@ -49,6 +50,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:fontFamily="@font/itim"
+            android:textStyle="bold"
+            android:textColor="#43258a"
             android:text="@string/status"
             android:textAlignment="center"
             android:textSize="18sp" />
@@ -57,7 +61,8 @@
 
     <ProgressBar
         android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
+
+        style="@style/CustomProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -65,6 +70,7 @@
         android:max="100"
         android:minWidth="300dp"
         android:progress="1"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />

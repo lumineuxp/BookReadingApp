@@ -9,12 +9,14 @@ import android.media.MediaRecorder
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Environment
+import android.os.Handler
 import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -43,6 +45,8 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
     private var statusTV: TextView? = null
     private var isRecording: Boolean = false
     private var isPlaying : Boolean = false
+    private var i = 0
+    private val handler = Handler()
 
     // creating a variable for media recorder object class.
     private var mRecorder: MediaRecorder? = null
@@ -113,6 +117,7 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
         val stopplayTV: ImageButton = binding.stopBtn
         val playOrg: ImageButton = binding.playOrgBtn
         val recordAgain: ImageButton = binding.recAgainBtn
+        val progressBar: ProgressBar = binding.progressBar
 //        stopTV!!.setBackgroundColor(808080)
 //        playTV!!.setBackgroundColor(808080)
 //        stopplayTV!!.setBackgroundColor(808080)
@@ -143,13 +148,41 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
                         //เผื่อได้ใช้
                         //เดี๋ยวลองเอา progress bar มาใช้ตรงนี้ อย่า ลืม นะ!!
 //                    mTextField.setText("seconds remaining: " + millisUntilFinished / 1000)
+                        statusTV?.text = "Recording..."
+                        progressBar.visibility = View.VISIBLE
+
+                        i = progressBar.progress
+
+                        Thread(Runnable {
+                            // this loop will run until the value of i becomes 99
+                            while (i < 100) {
+                                i += 1
+                                // Update the progress bar and display the current value
+                                handler.post(Runnable {
+                                    progressBar.progress = i
+                                    // setting current progress to the textview
+                                    //txtView!!.text = i.toString() + "/" + progressBar.max
+                                })
+                                try {
+                                    Thread.sleep(100)
+                                } catch (e: InterruptedException) {
+                                    e.printStackTrace()
+                                }
+                            }
+
+                            // setting the visibility of the progressbar to invisible
+                            // or you can use View.GONE instead of invisible
+                            // View.GONE will remove the progressbar
+                            progressBar.visibility = View.INVISIBLE
+
+                        }).start()
 
                     }
 
                     override fun onFinish() {
                         //เผื่อใช้
 //                    mTextField.setText("done!")
-                        statusTV?.setText("Recording Stopped")
+                        statusTV?.text = "Finished"
                         //recordingTV?.visibility = View.GONE
                         playTV?.visibility = View.VISIBLE
                         playOrg?.visibility = View.VISIBLE

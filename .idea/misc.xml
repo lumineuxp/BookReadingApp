@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/drawable/custom_progress_bar_horizontal.xml" value="0.2555" />
         <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/drawable/ic_baseline_menu_book_24.xml" value="0.2555" />
         <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/drawable/ic_baseline_record_voice_over_24.xml" value="0.2555" />
         <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/drawable/ic_baseline_record_voice_over_purple_40.xml" value="0.1385" />
