@@ -25,10 +25,12 @@ import java.io.IOException
 class Storybooks : AppCompatActivity() {
 
     private var fileSyn = ""
+    private var fileSynTest = ""
     private var player: MediaPlayer? = null
     private var isPlaying : Boolean = false
     private var fileName = ""
     private var currentPage = 0
+
 
     private var tale_id : Int? = null
 
@@ -77,9 +79,26 @@ class Storybooks : AppCompatActivity() {
 
         val nextBtn:ImageButton = findViewById(R.id.NextButton)
             nextBtn.setOnClickListener {
-                currentPage += 1
-                if (currentPage >= synlist.size) {
-                    currentPage -= 1
+                if (!isPlaying) {
+                    currentPage += 1
+                    if (currentPage >= synlist.size) {
+                        currentPage -= 1
+                    }
+
+                    currentSynAndText = synlist[currentPage]
+
+                    val currentText = currentSynAndText.text
+                    // ใส่โค้ดที่จำเป็นสำหรับแสดงข้อความและเสียงตามลำดับ
+                    story.text = currentText
+                }
+            }
+
+        val backBtn:ImageButton = findViewById(R.id.BackButton)
+        backBtn.setOnClickListener {
+            if (!isPlaying) {
+                currentPage -= 1
+                if (currentPage <= -1) {
+                    currentPage = 0
                 }
 
                 currentSynAndText = synlist[currentPage]
@@ -87,21 +106,7 @@ class Storybooks : AppCompatActivity() {
                 val currentText = currentSynAndText.text
                 // ใส่โค้ดที่จำเป็นสำหรับแสดงข้อความและเสียงตามลำดับ
                 story.text = currentText
-
             }
-
-        val backBtn:ImageButton = findViewById(R.id.BackButton)
-        backBtn.setOnClickListener {
-            currentPage -= 1
-            if (currentPage <= -1) {
-                currentPage = 0
-            }
-
-            currentSynAndText = synlist[currentPage]
-
-            val currentText = currentSynAndText.text
-            // ใส่โค้ดที่จำเป็นสำหรับแสดงข้อความและเสียงตามลำดับ
-            story.text = currentText
 
         }
 
@@ -120,15 +125,22 @@ class Storybooks : AppCompatActivity() {
 
             playStory = findViewById(R.id.play_story)
             playStory.setOnClickListener {
-                if (!isPlaying && fileSyn != null){
+                if (!isPlaying && fileSyn != null) {
                     isPlaying = true
                     playStory.setImageResource(R.drawable.pause_circle_blue)
                     playSyn()
-
-                }else{
+                    nextBtn.setImageResource(R.drawable.next_gray)
+                    nextBtn.isEnabled = false
+                    backBtn.setImageResource(R.drawable.back_gray)
+                    backBtn.isEnabled = false
+                } else {
                     isPlaying = false
                     playStory.setImageResource(R.drawable.play_circle_blue)
                     stopPlaySyn()
+                    nextBtn.setImageResource(R.drawable.next_blue)
+                    nextBtn.isEnabled = true
+                    backBtn.setImageResource(R.drawable.back_blue)
+                    backBtn.isEnabled = true
                 }
             }
 
@@ -173,7 +185,7 @@ class Storybooks : AppCompatActivity() {
     private fun playSyn() {
 
         //fileSyn = Environment.getExternalStorageDirectory().absolutePath + "/sdcard/Audio/" + fileName
-        var fileSynTest = "${Environment.getExternalStorageDirectory().absolutePath}/sdcard/Audio/${tale_id}/${audioFiles[currentPage]}"
+        fileSynTest = "${Environment.getExternalStorageDirectory().absolutePath}/sdcard/Audio/${tale_id}/${audioFiles[currentPage]}"
 
         player = MediaPlayer()
         try {
@@ -187,22 +199,25 @@ class Storybooks : AppCompatActivity() {
 
             player!!.setOnCompletionListener {
                 if (currentPage < audioFiles.size - 1) {
-                    currentPage++
+                    currentPage += 1
                     var currentText = synlist[currentPage]
-                    //story = findViewById<TextView>(R.id.story_tale)
                     story.text = currentText.text
                     playSyn()
-                } else {
+                }else {
                     playStory.setImageResource(R.drawable.play_circle_blue)
                     isPlaying = false
                 }
             }
+
             player!!.start()
+
         } catch (e : IOException){
             Log.e("MediaPlayer not work", "prepare failed")
         }
 
     }
+
+
 
     private fun stopPlaySyn() {
         try {
