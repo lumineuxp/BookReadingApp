@@ -35,7 +35,10 @@ class Storybooks : AppCompatActivity() {
     private var tale_id : Int? = null
 
     lateinit var playStory:ImageButton
+    lateinit var nextBtn:ImageButton
+    lateinit var backBtn:ImageButton
     lateinit var story:TextView
+
     var audioFiles = mutableListOf<String>()
     private var indexAudioFile = 0 // เก็บตำแหน่งไฟล์เสียงที่จะเล่น
 
@@ -77,7 +80,7 @@ class Storybooks : AppCompatActivity() {
         story = findViewById<TextView>(R.id.story_tale)
         story.text = currentSynAndText.text
 
-        val nextBtn:ImageButton = findViewById(R.id.NextButton)
+          nextBtn = findViewById(R.id.NextButton)
             nextBtn.setOnClickListener {
                 if (!isPlaying) {
                     currentPage += 1
@@ -93,7 +96,7 @@ class Storybooks : AppCompatActivity() {
                 }
             }
 
-        val backBtn:ImageButton = findViewById(R.id.BackButton)
+        backBtn = findViewById(R.id.BackButton)
         backBtn.setOnClickListener {
             if (!isPlaying) {
                 currentPage -= 1
@@ -205,6 +208,10 @@ class Storybooks : AppCompatActivity() {
                     playSyn()
                 }else {
                     playStory.setImageResource(R.drawable.play_circle_blue)
+                    nextBtn.setImageResource(R.drawable.next_blue)
+                    nextBtn.isEnabled = true
+                    backBtn.setImageResource(R.drawable.back_blue)
+                    backBtn.isEnabled = true
                     isPlaying = false
                 }
             }
