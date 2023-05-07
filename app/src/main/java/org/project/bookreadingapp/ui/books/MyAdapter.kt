@@ -84,8 +84,10 @@ class MyAdapter(val context: Context, val TaleList:List<Tales>) : RecyclerView.A
             var taleEmbed = TaleEmbed()
             var id= TaleList.get(position).tald_id
             val mockEmbed = "AAAAAAAAAABGpDs9AAAAAH2IPDtEAYk9AAAAABo7/DxnHKE8CgSFPVfKKz6rJoI+ZfBKOwAAAAAAAAAAr5igOZFYPjwAC0g9iAjEPUsT8zwAAAAAy7dMPgAAAAAAAAAAAAAAAKqIzDsAAAAAAAAAAAAAAAAAAAAADU9MPfiMRz3HOoU9AAAAAPB1KzsTPH493D26PNh+Hj0AAAAAAAAAAAAAAABvyi4+AAAAAPz+bzzrOw0+cN/dPQAAAABF5UA83ECDPQAAAAAAAAAAAAAAAAAAAAAAAAAAbRSePFXFyDuhd+k8p9rPPa6wJD0AAAAAaVHFPQAAAAAAAAAAAAAAAJe8tT0AAAAAX3kAPdn5bT0AAAAA0mwqPK/HBD6HFQk8AAAAAKiDhD30kGc8fao8PQAAAAAFZ808AAAAALdqmD2l/lE8AAAAAJs1ez2AVd49AAAAAAAAAAAAAAAA7sFVPQAAAACTXI49KYCbPQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA0vkgPYr/Xj7mT+M8XChiPAAAAADOA7A9AAAAABFeYz0AAAAACpvoOwAAAAB3/gc+M+vHOwAAAADrtWs9AAAAAAAAAAAb3rI7wTXaO7/lSz3OAjM9h9rMPQAAAAAJgSQ+AAAAAN+0Oj4AAAAAAAAAAAAAAAAAAAAAAAAAAGdNNz5kSFE+LiwePBMjljsAAAAA/riPPQAAAAAAAAAAAAAAAN1FhTwAAAAAhRKAPQAAAABud7k7AAAAAL8LQz4AAAAAAAAAAN8DKT0AAAAAAAAAAAAAAABP5Tc9K4Y0Oxo1kD2GFBk9UukYOt5Esj0AAAAA8JMNPB3zvjwAAAAAAAAAAAAAAACoWyU+7npIPVct+D0AAAAAAAAAAAAAAAAAAAAAAAAAAKsTrzoAAAAAzTJ5PAAAAABNf5s8FXKTPQAAAAAAAAAAEiYuPQAAAAAAAAAAAAAAAOvRDT4AAAAAAAAAAIvSMj1QCJ87AAAAAKgWEzwAAAAAAAAAAAAAAAB7bzw9sjdtPsq1ET6XHv09wzExPsGDez0AAAAAAAAAAB4QAj0AAAAAhy3TOunEUD2QsQI+CPuZPQAAAAB08IA9OMJaPAAAAAAodZc4AAAAAHnXBzxmktI9AAAAAIm5IT4AAAAAAAAAAAAAAADe1Fg9m3YoPnVmnT0jKz89AAAAAAAAAAD90W89AAAAAAAAAAAAAAAAAAAAAAAAAADLlM86q2mqPbfO5z0VtDA8tLrZPOIOyT3jr4o9JO0DPiJanD3aNH09zvZYPAc6UTyYybc8WFedPAAAAACOg7g9hHBrPQAAAAAAAAAAAAAAAA=="
+            var embedVector = getVector()
             taleEmbed.tale_id = id
-            taleEmbed.embed = mockEmbed
+//            taleEmbed.embed = mockEmbed
+            taleEmbed.embed = embedVector
 
             var synlist:List<SynVoice> = listOf(
                 SynVoice("It so happened that a Fox caught its tail in a trap, and in struggling to release himself lost all of it but the stump.",
@@ -206,27 +208,32 @@ class MyAdapter(val context: Context, val TaleList:List<Tales>) : RecyclerView.A
 
     }
 
-    private fun readFiletoString(fileName : String) : String{
-//        try {
-//            val fis = context.openFileInput(fileName)
-//            val isr = InputStreamReader(fis)
-//            val bufferedReader = BufferedReader(isr)
-//            val stringBuilder = StringBuilder()
-//            var line: String? = bufferedReader.readLine()
-//            while (line != null) {
-//                stringBuilder.append(line)
-//                line = bufferedReader.readLine()
-//            }
-//            isr.close()
-//            fis.close()
-//            return stringBuilder.toString()
-//        } catch (e: IOException) {
-//            e.printStackTrace()
-//        }
+    private fun getVector() : String{
+        val fileName = "vector.txt"
+        val file = File(context.filesDir, fileName)
+        var str = ""
+
+        if (file.exists()) {
+            val fileReader = FileReader(file)
+            val bufferedReader = BufferedReader(fileReader)
 
 
+            var line = bufferedReader.readLine()
+            while (line != null) {
+                str += line
+                line = bufferedReader.readLine()
+            }
 
-    return ""
+            bufferedReader.close()
+            fileReader.close()
+
+            // Now "str" contains the contents of the file
+        } else {
+            // The file does not exist
+            Log.e("error","error to find vector file")
+        }
+
+    return str
     }
     private fun getTextList(id:Int):ArrayList<String>{
         // Read the JSON file from the emulator's internal storage

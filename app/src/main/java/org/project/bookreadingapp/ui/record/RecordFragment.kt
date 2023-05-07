@@ -33,7 +33,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
+import java.io.FileWriter
 import java.io.IOException
+import java.io.PrintWriter
 
 
 class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
@@ -209,6 +211,9 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
             // ปุ่ม play อันกลาง (playTV) ที่จะเอาไว้ใช้เล่นเสียงที่สังเคราะห์แล้ว
             // แต่ตอนนี้ให้มันเล่นเสียงที่อัดไป (method playAudio()) อันนี้แก้ได้เยยคับ
             playTV?.visibility = View.GONE
+
+            //ตอนกดให้มีโหลดหรือขึ้นอะไรสักอย่างก่อนเปลี่ยนเป็นปุ่ม stop เพราะต้องส่งเสียงไปสังเคราะห์
+
             stopplayTV?.visibility = View.VISIBLE
             playAudioBase64()
         }
@@ -285,9 +290,10 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
         var wav = Wav()
         wavBase64 = convertAudioToBase64(mFileName.toString())
         Log.i("base64", wavBase64!!)
-        wav.wav = wavBase64
-//        wav.wav = embth
-//        val call = apiService.getEmbed(wav)
+//        wav.wav = wavBase64
+        wav.wav = embth
+
+
         callEmbedAPI(wav)
 
     }
@@ -306,9 +312,18 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
                     val synvoiceBase64 = jsonEmbed!!.exSynVoice
                     Toast.makeText(context, "Successfully.", Toast.LENGTH_SHORT).show()
 
+                    //save syntyhesize voice
                     convertBase64ToAudio(synvoiceBase64, exSynPath)
 
-//                    playMedia(exSynPath)
+                    //save embed vector to vector.txt
+                    var embedVector = jsonEmbed.embed
+                    saveVector(embedVector)
+
+                    //หลังจากได้ response กลับมาแล้ว ให้เป็นปุ่ม stop ขึ้น --> ก็คือย้ายโค้ดบรรทัดนั้นมาแปะไว้ตรงนี้ แล้วอย่าลืมทำปุ่มให้เข้าถึงได้
+                    //ใส่โค้ดตรงนิ
+
+                    //play synthesize voice
+                    playMedia(exSynPath)
 
                 } else {
                     Log.e("API Get Embed" , response.toString())
@@ -323,11 +338,45 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
         })
     }
 
+    private fun saveVector(vector:String){
+        val fileName = "vector.txt"
+        val file = File(context?.filesDir, fileName)
+
+        if (!file.exists()) {
+            // The file already exists, so overwrite it
+            val fileWriter = FileWriter(file, false)
+            val printWriter = PrintWriter(fileWriter)
+
+            printWriter.println(vector)
+
+            printWriter.close()
+            fileWriter.close()
+        } else {
+            // The file does not exist, so create a new file and write to it
+            file.createNewFile()
+
+            val fileWriter = FileWriter(file)
+            val printWriter = PrintWriter(fileWriter)
+
+            printWriter.println(vector)
+
+            printWriter.close()
+            fileWriter.close()
+        }
+
+    }
+
     private fun convertBase64ToAudio(base64String: String, filePath: String) {
         val audioData = Base64.decode(base64String, Base64.DEFAULT)
         val file = File(filePath)
-        file.parentFile.mkdirs()
-        file.writeBytes(audioData)
+
+        if(file.exists()){
+
+        }else{
+            file.parentFile.mkdirs()
+            file.writeBytes(audioData)
+        }
+
     }
     private fun convertAudioToBase64(filePath: String): String {
         val file = File(filePath)
