@@ -75,7 +75,6 @@
             android:id="@+id/play_story"
             android:layout_width="113dp"
             android:layout_height="72dp"
-            android:layout_marginLeft="14dp"
             android:background="@null"
             android:contentDescription="play story"
             app:srcCompat="@drawable/play_circle_blue" />
