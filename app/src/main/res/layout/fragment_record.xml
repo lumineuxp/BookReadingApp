@@ -43,52 +43,10 @@
                 android:text="@string/text_example_thai"
                 android:textAlignment="center"
                 android:textSize="18sp" />
+
         </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/idTVstatus"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/itim"
-            android:textStyle="bold"
-            android:textColor="#43258a"
-            android:text="@string/status"
-            android:textAlignment="center"
-            android:textSize="18sp" />
-
     </LinearLayout>
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-
-        style="@style/CustomProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:indeterminate="false"
-        android:max="100"
-        android:minWidth="300dp"
-        android:progress="1"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-    <ImageButton
-        android:id="@+id/recordBtn"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:layout_marginStart="155dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="156dp"
-        android:background="@drawable/circle_button"
-        android:contentDescription="recordButton"
-        android:src="@drawable/ic_baseline_mic_gray_65"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <!--    <ImageButton-->
     <!--        android:id="@+id/recordingBtn"-->
@@ -107,6 +65,38 @@
     <!--        app:layout_constraintStart_toStartOf="parent"-->
     <!--        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />-->
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+
+        style="@style/CustomProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="false"
+        android:max="100"
+        android:minWidth="300dp"
+        android:progress="1"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout" />
+
+    <ImageButton
+        android:id="@+id/recordBtn"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="155dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="156dp"
+        android:layout_marginBottom="80dp"
+        android:background="@drawable/circle_button"
+        android:contentDescription="recordButton"
+        android:src="@drawable/ic_baseline_mic_gray_65"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
     <ImageButton
         android:id="@+id/playBtn"
         android:layout_width="100dp"
@@ -115,9 +105,11 @@
         android:layout_marginStart="155dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="156dp"
+        android:layout_marginBottom="80dp"
         android:background="@drawable/circle_button"
         android:src="@drawable/ic_baseline_play_arrow_red_65"
         android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
@@ -130,9 +122,11 @@
         android:layout_marginStart="155dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="156dp"
+        android:layout_marginBottom="80dp"
         android:background="@drawable/circle_button"
         android:src="@drawable/ic_baseline_stop_red_65"
         android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
@@ -141,27 +135,60 @@
         android:id="@+id/playOrgBtn"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="80dp"
         android:background="@drawable/circle_button"
         android:contentDescription="play original voice button"
         android:src="@drawable/ic_baseline_record_voice_over_24"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/recordBtn"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/recordBtn"
-        app:layout_constraintTop_toTopOf="@+id/recordBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <ImageButton
         android:id="@+id/recAgainBtn"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="80dp"
         android:background="@drawable/circle_button"
         android:contentDescription="record voice again button"
         android:src="@drawable/ic_baseline_replay_24"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/recordBtn"
-        app:layout_constraintEnd_toStartOf="@+id/recordBtn"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/recordBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <ProgressBar
+        android:id="@+id/pBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="50dp"
+        android:indeterminateDrawable="@drawable/progress_icon"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <TextView
+        android:id="@+id/idTVstatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/itim"
+        android:text="@string/status"
+        android:textAlignment="center"
+        android:textColor="#43258a"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
 
     <!--This will display the status of our app when
         we will record some audio and play that audio-->
