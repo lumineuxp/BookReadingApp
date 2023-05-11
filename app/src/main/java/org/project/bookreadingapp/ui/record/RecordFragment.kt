@@ -20,6 +20,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import org.project.bookreadingapp.R
@@ -52,6 +53,12 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
     private var progBarCircle : ProgressBar? = null
     private var i = 0
     private val handler = Handler()
+    //private var isButtonVisible = false
+    private var isStartTVVisible = true
+    private var isPlayTVVisible = false
+    private var isPlayOrgVisible = false
+    private var isRecAgainVisible = false
+    //private val buttonStates: MutableMap<Int, Boolean> = mutableMapOf()
 
     // creating a variable for media recorder object class.
     private var mRecorder: MediaRecorder? = null
@@ -74,11 +81,28 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
     // onDestroyView.
     private val binding get() = _binding!!
 
+//    companion object {
+//        private const val PLAYTV_BUTTON = "playtv_button"
+//        private const val RECAG_BUTTON = "recag_button"
+//    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        savedInstanceState?.let {
+            isStartTVVisible = it.getBoolean("startTVButtonState")
+            isPlayTVVisible = it.getBoolean("playTVButtonState")
+            isPlayOrgVisible = it.getBoolean("playOrgButtonState")
+            isRecAgainVisible = it.getBoolean("recAgainButtonState")
+//            for (buttonId in buttonStates.keys) {
+//                val buttonState = it.getBoolean(buttonId.toString())
+//                buttonStates[buttonId] = buttonState
+//            }
+        }
+
         val recordViewModel =
             ViewModelProvider(this).get(RecordViewModel::class.java)
 
@@ -102,6 +126,14 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
         val txtExample: TextView = binding.textExample
         val progBarCircle: ProgressBar = binding.pBar
 
+        startTV.isVisible = isStartTVVisible
+        playTV.isVisible = isPlayTVVisible
+        playOrg.isVisible = isPlayOrgVisible
+        recordAgain.isVisible = isRecAgainVisible
+//        startTV.isVisible = buttonStates[startTV.id] ?: true
+//        playTV.isVisible = buttonStates[playTV.id] ?: false
+//        playOrg.isVisible = buttonStates[playOrg.id] ?: false
+//        recordAgain.isVisible = buttonStates[recordAgain.id] ?: false
 
         startTV?.setOnClickListener { // start recording method will
             // start the recording of audio.
@@ -155,6 +187,10 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
                     // ask for runtime permission for mic and storage.
                     RequestPermissions()
                 }
+                isStartTVVisible = startTV.isVisible
+                isPlayTVVisible = playTV.isVisible
+                isPlayOrgVisible = playOrg.isVisible
+                isRecAgainVisible = recordAgain.isVisible
             }
         }
 
@@ -188,6 +224,10 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
                 pausePlaying()
                 statusTV?.text = "Finished!"
             }
+            isStartTVVisible = startTV.isVisible
+            isPlayTVVisible = playTV.isVisible
+            isPlayOrgVisible = playOrg.isVisible
+            isRecAgainVisible = recordAgain.isVisible
         }
 
         playTV?.setOnClickListener { // play audio method will play
@@ -198,6 +238,7 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
             //ตอนกดให้มีโหลดหรือขึ้นอะไรสักอย่างก่อนเปลี่ยนเป็นปุ่ม stop เพราะต้องส่งเสียงไปสังเคราะห์
 
             //อันใหม่
+            //val newButtonState = !(buttonStates[startTV.id] ?: false)
             val exSynPath = "/sdcard/MyApp/audio/example.wav"
             val synFile = File("/sdcard/MyApp/audio/example.wav")
             if (synFile.exists()) {
@@ -212,6 +253,11 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
                     isPlaying = false
                     pausePlaying()
                     statusTV?.text = "Finished!"
+//                    isButtonVisible = playTV.isVisible
+//                    buttonStates[startTV.id] = startTV.isVisible
+//                    buttonStates[playTV.id] = playTV.isVisible
+//                    buttonStates[playOrg.id] = playOrg.isVisible
+//                    buttonStates[recordAgain.id] = recordAgain.isVisible
                 }
             } else {
                 // file does not exist
@@ -220,8 +266,16 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
                 statusTV?.text = "Synthesizing..."
                 progBarCircle.visibility = View.VISIBLE
                 playAudioBase64()
+//                isButtonVisible = playTV.isVisible
+//                buttonStates[startTV.id] = startTV.isVisible
+//                buttonStates[playTV.id] = playTV.isVisible
+//                buttonStates[playOrg.id] = playOrg.isVisible
+//                buttonStates[recordAgain.id] = recordAgain.isVisible
             }
-
+            isStartTVVisible = startTV.isVisible
+            isPlayTVVisible = playTV.isVisible
+            isPlayOrgVisible = playOrg.isVisible
+            isRecAgainVisible = recordAgain.isVisible
         }
 
         stopplayTV?.setOnClickListener { // pause play method will
@@ -229,22 +283,66 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
             stopplayTV?.visibility = View.GONE
             playTV?.visibility = View.VISIBLE
             pausePlaying()
+            isStartTVVisible = startTV.isVisible
+            isPlayTVVisible = playTV.isVisible
+            isPlayOrgVisible = playOrg.isVisible
+            isRecAgainVisible = recordAgain.isVisible
         }
 
         recordAgain?.setOnClickListener {
             // back to the beginning กลับไปเริ่มอัดใหม่ อุอิ
             // ค่อนข้างจะมั่วซั่ว อาจเจอบัคได้ นี่คือคำเตือน 555555555555555
-            txtExample.setText(R.string.text_example_thai)
-            playTV?.visibility = View.GONE
-            stopplayTV?.visibility = View.GONE
-            playOrg?.visibility = View.GONE
-            recordAgain?.visibility = View.GONE
-            statusTV?.text = "Status"
-            startTV?.visibility = View.VISIBLE
-            startTV.isClickable = true
+            val filePath = "/sdcard/MyApp/audio/example.wav"
+            val file = File(filePath)
+            val deleted = file.delete()
+
+            if (deleted) {
+                // File successfully deleted
+                txtExample.setText(R.string.text_example_thai)
+                playTV?.visibility = View.GONE
+                stopplayTV?.visibility = View.GONE
+                playOrg?.visibility = View.GONE
+                recordAgain?.visibility = View.GONE
+                statusTV?.text = "Status"
+                startTV?.visibility = View.VISIBLE
+                startTV.isClickable = true
+            } else {
+                // Failed to delete the file
+                Toast.makeText(
+                    requireContext(),
+                    "Please try again.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
+            isStartTVVisible = startTV.isVisible
+            isPlayTVVisible = playTV.isVisible
+            isPlayOrgVisible = playOrg.isVisible
+            isRecAgainVisible = recordAgain.isVisible
         }
 
+//        savedInstanceState?.run {
+//            //playTV = getString(PLAYTV_BUTTON)
+//            isButtonVisible = getBoolean(PLAYTV_BUTTON)
+//            isRecAgainVisible = getBoolean(RECAG_BUTTON)
+//        }
+
         return root
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        /* ... */
+        super.onSaveInstanceState(outState)
+        //outState.putString(PLAYTV_BUTTON, playTV)
+//        outState.putBoolean(PLAYTV_BUTTON, isButtonVisible)
+//        outState.putBoolean(RECAG_BUTTON, isRecAgainVisible)
+//        for ((buttonId, buttonState) in buttonStates) {
+//            outState.putBoolean(buttonId.toString(), buttonState)
+//        }
+        outState.putBoolean("startTVButtonState", isStartTVVisible)
+        outState.putBoolean("playTVButtonState", isPlayTVVisible)
+        outState.putBoolean("playOrgButtonState", isPlayOrgVisible)
+        outState.putBoolean("recAgainButtonState", isRecAgainVisible)
     }
 
     private fun startRecording() {
