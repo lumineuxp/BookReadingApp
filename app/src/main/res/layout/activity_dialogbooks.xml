@@ -29,12 +29,24 @@
         app:layout_constraintStart_toStartOf="@+id/dialog_image"
         app:layout_constraintTop_toBottomOf="@+id/dialog_image" />
 
+<!--    <ProgressBar-->
+<!--        android:id="@+id/pBar"-->
+<!--        style="?android:color"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="15dp"-->
+<!--        android:visibility="invisible"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/dialog_image"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/dialog_image"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/dialog_image"></ProgressBar>-->
+
     <ProgressBar
         android:id="@+id/pBar"
-        style="?android:color"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_marginTop="15dp"
+        android:indeterminateDrawable="@drawable/progress_icon"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/dialog_image"
         app:layout_constraintStart_toStartOf="@+id/dialog_image"
