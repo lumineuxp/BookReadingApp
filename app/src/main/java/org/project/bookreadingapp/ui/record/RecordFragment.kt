@@ -58,6 +58,10 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
     private var isPlayTVVisible = false
     private var isPlayOrgVisible = false
     private var isRecAgainVisible = false
+    private var isRecordLBVisible = true
+    private var isPlaySynLBVisible = false
+    private var isPlayOrgLBVisible = false
+    private var isRecAgainLBVisible = false
     //private val buttonStates: MutableMap<Int, Boolean> = mutableMapOf()
 
     // creating a variable for media recorder object class.
@@ -81,11 +85,6 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
     // onDestroyView.
     private val binding get() = _binding!!
 
-//    companion object {
-//        private const val PLAYTV_BUTTON = "playtv_button"
-//        private const val RECAG_BUTTON = "recag_button"
-//    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -97,6 +96,10 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
             isPlayTVVisible = it.getBoolean("playTVButtonState")
             isPlayOrgVisible = it.getBoolean("playOrgButtonState")
             isRecAgainVisible = it.getBoolean("recAgainButtonState")
+            isRecordLBVisible = it.getBoolean("recordLabelState")
+            isPlaySynLBVisible = it.getBoolean("playSynLabelState")
+            isPlayOrgLBVisible = it.getBoolean("playOrgLabelState")
+            isRecAgainLBVisible = it.getBoolean("recAgainLabelState")
 //            for (buttonId in buttonStates.keys) {
 //                val buttonState = it.getBoolean(buttonId.toString())
 //                buttonStates[buttonId] = buttonState
@@ -125,11 +128,20 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
         val progressBar: ProgressBar = binding.progressBar
         val txtExample: TextView = binding.textExample
         val progBarCircle: ProgressBar = binding.pBar
+        val lbRecAgain: TextView = binding.lbRecAgain
+        val lbRecord: TextView = binding.lbRecord
+        val lbPlayOrg: TextView = binding.lbPlayOrg
+        val lbPlaySyn: TextView = binding.lbPlaySyn
+        val lbStop: TextView = binding.lbStop
 
         startTV.isVisible = isStartTVVisible
         playTV.isVisible = isPlayTVVisible
         playOrg.isVisible = isPlayOrgVisible
         recordAgain.isVisible = isRecAgainVisible
+        lbRecord.isVisible = isRecordLBVisible
+        lbPlaySyn.isVisible = isPlaySynLBVisible
+        lbPlayOrg.isVisible = isPlayOrgLBVisible
+        lbRecAgain.isVisible = isRecAgainLBVisible
 //        startTV.isVisible = buttonStates[startTV.id] ?: true
 //        playTV.isVisible = buttonStates[playTV.id] ?: false
 //        playOrg.isVisible = buttonStates[playOrg.id] ?: false
@@ -174,6 +186,10 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
                             playOrg?.visibility = View.VISIBLE
                             recordAgain?.visibility = View.VISIBLE
                             progressBar.visibility = View.GONE
+                            lbRecord.visibility = View.GONE
+                            lbPlaySyn.visibility = View.VISIBLE
+                            lbPlayOrg.visibility = View.VISIBLE
+                            lbRecAgain.visibility = View.VISIBLE
                         }
                     }
 
@@ -191,6 +207,10 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
                 isPlayTVVisible = playTV.isVisible
                 isPlayOrgVisible = playOrg.isVisible
                 isRecAgainVisible = recordAgain.isVisible
+                isRecordLBVisible = lbRecord.isVisible
+                isPlaySynLBVisible = lbPlaySyn.isVisible
+                isPlayOrgLBVisible = lbPlayOrg.isVisible
+                isRecAgainLBVisible = lbRecAgain.isVisible
             }
         }
 
@@ -209,6 +229,8 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
                 playAudio()
                 statusTV?.text = "Playing your original voice..."
                 txtExample.setText(R.string.text_example_thai)
+                recordAgain.isClickable = false
+                playTV.isClickable = false
 
                 mPlayer!!.setOnCompletionListener {
                     // เมื่อเล่นเสียงเสร็จสิ้น
@@ -216,6 +238,8 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
                     isPlaying = false
                     pausePlaying()
                     statusTV?.text = "Finished!"
+                    recordAgain.isClickable = true
+                    playTV.isClickable = true
                 }
 
             }else{
@@ -223,11 +247,17 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
                 playOrg.setImageResource(R.drawable.ic_baseline_record_voice_over_24)
                 pausePlaying()
                 statusTV?.text = "Finished!"
+                recordAgain.isClickable = true
+                playTV.isClickable = true
             }
             isStartTVVisible = startTV.isVisible
             isPlayTVVisible = playTV.isVisible
             isPlayOrgVisible = playOrg.isVisible
             isRecAgainVisible = recordAgain.isVisible
+            isRecordLBVisible = lbRecord.isVisible
+            isPlaySynLBVisible = lbPlaySyn.isVisible
+            isPlayOrgLBVisible = lbPlayOrg.isVisible
+            isRecAgainLBVisible = lbRecAgain.isVisible
         }
 
         playTV?.setOnClickListener { // play audio method will play
@@ -243,16 +273,25 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
             val synFile = File("/sdcard/MyApp/audio/example.wav")
             if (synFile.exists()) {
                 // file exists
+                statusTV?.text = "Playing synthesis voice..."
                 stopplayTV?.visibility = View.VISIBLE
+                lbStop.visibility = View.VISIBLE
+                lbPlaySyn.visibility = View.GONE
                 txtExample.setText(R.string.text_example_eng)
                 playMedia(exSynPath)
+                recordAgain.isClickable = false
+                playOrg.isClickable = false
                 mPlayer!!.setOnCompletionListener {
                     // เมื่อเล่นเสียงเสร็จสิ้น
                     stopplayTV?.visibility = View.GONE
+                    lbStop.visibility = View.GONE
                     playTV.visibility = View.VISIBLE
+                    lbPlaySyn.visibility = View.VISIBLE
                     isPlaying = false
                     pausePlaying()
                     statusTV?.text = "Finished!"
+                    recordAgain.isClickable = true
+                    playOrg.isClickable = true
 //                    isButtonVisible = playTV.isVisible
 //                    buttonStates[startTV.id] = startTV.isVisible
 //                    buttonStates[playTV.id] = playTV.isVisible
@@ -263,6 +302,9 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
                 // file does not exist
                 recordAgain.visibility = View.GONE
                 playOrg.visibility = View.GONE
+                lbRecAgain.visibility = View.GONE
+                lbPlaySyn.visibility = View.GONE
+                lbPlayOrg.visibility = View.GONE
                 statusTV?.text = "Synthesizing..."
                 progBarCircle.visibility = View.VISIBLE
                 playAudioBase64()
@@ -276,17 +318,30 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
             isPlayTVVisible = playTV.isVisible
             isPlayOrgVisible = playOrg.isVisible
             isRecAgainVisible = recordAgain.isVisible
+            isRecordLBVisible = lbRecord.isVisible
+            isPlaySynLBVisible = lbPlaySyn.isVisible
+            isPlayOrgLBVisible = lbPlayOrg.isVisible
+            isRecAgainLBVisible = lbRecAgain.isVisible
         }
 
         stopplayTV?.setOnClickListener { // pause play method will
             // pause the play of audio
+            statusTV?.text = "Finished!"
             stopplayTV?.visibility = View.GONE
+            lbStop.visibility = View.GONE
             playTV?.visibility = View.VISIBLE
+            lbPlaySyn.visibility = View.VISIBLE
             pausePlaying()
+            recordAgain.isClickable = true
+            playOrg.isClickable = true
             isStartTVVisible = startTV.isVisible
             isPlayTVVisible = playTV.isVisible
             isPlayOrgVisible = playOrg.isVisible
             isRecAgainVisible = recordAgain.isVisible
+            isRecordLBVisible = lbRecord.isVisible
+            isPlaySynLBVisible = lbPlaySyn.isVisible
+            isPlayOrgLBVisible = lbPlayOrg.isVisible
+            isRecAgainLBVisible = lbRecAgain.isVisible
         }
 
         recordAgain?.setOnClickListener {
@@ -306,6 +361,10 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
                 statusTV?.text = "Status"
                 startTV?.visibility = View.VISIBLE
                 startTV.isClickable = true
+                lbRecAgain.visibility = View.GONE
+                lbPlaySyn.visibility = View.GONE
+                lbPlayOrg.visibility = View.GONE
+                lbRecord.visibility = View.VISIBLE
             } else {
                 // Failed to delete the file
                 Toast.makeText(
@@ -319,6 +378,10 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
             isPlayTVVisible = playTV.isVisible
             isPlayOrgVisible = playOrg.isVisible
             isRecAgainVisible = recordAgain.isVisible
+            isRecordLBVisible = lbRecord.isVisible
+            isPlaySynLBVisible = lbPlaySyn.isVisible
+            isPlayOrgLBVisible = lbPlayOrg.isVisible
+            isRecAgainLBVisible = lbRecAgain.isVisible
         }
 
 //        savedInstanceState?.run {
@@ -418,6 +481,10 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
         val playOrg: ImageButton = binding.playOrgBtn
         val recordAgain: ImageButton = binding.recAgainBtn
         val playTV: ImageButton = binding.playBtn
+        val lbRecAgain: TextView = binding.lbRecAgain
+        val lbPlaySyn: TextView = binding.lbPlaySyn
+        val lbPlayOrg: TextView = binding.lbPlayOrg
+        val lbStop: TextView = binding.lbStop
 
         call.enqueue(object: Callback<Embed> {
 
@@ -440,19 +507,29 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
                     statusTV?.text = "Playing synthesis voice..."
                     progBarCircle?.visibility = View.GONE
                     stopplayTV?.visibility = View.VISIBLE
+                    lbStop.visibility = View.VISIBLE
+                    lbPlaySyn.visibility = View.GONE
                     txtExample?.setText(R.string.text_example_eng)
                     recordAgain.visibility = View.VISIBLE
                     playOrg.visibility = View.VISIBLE
+                    lbRecAgain.visibility = View.VISIBLE
+                    lbPlayOrg.visibility = View.VISIBLE
+                    recordAgain.isClickable = false
+                    playOrg.isClickable = false
 
                     //play synthesize voice
                     playMedia(exSynPath)
                     mPlayer!!.setOnCompletionListener {
                         // เมื่อเล่นเสียงเสร็จสิ้น
                         stopplayTV?.visibility = View.GONE
+                        lbStop.visibility = View.GONE
                         playTV.visibility = View.VISIBLE
+                        lbPlaySyn.visibility = View.VISIBLE
                         isPlaying = false
                         pausePlaying()
                         statusTV?.text = "Finished!"
+                        recordAgain.isClickable = true
+                        playOrg.isClickable = true
                     }
 
                 } else {
@@ -571,24 +648,24 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
 
     fun CheckPermissions(): Boolean {
 
-//        val result = ContextCompat.checkSelfPermission(
-//            requireContext(),WRITE_EXTERNAL_STORAGE
-//        )
         val result = ContextCompat.checkSelfPermission(
+            requireContext(),WRITE_EXTERNAL_STORAGE
+        )
+        val result1 = ContextCompat.checkSelfPermission(
             requireContext(),RECORD_AUDIO
         )
 
-//        return result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED
-        return result == PackageManager.PERMISSION_GRANTED
+        return result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED
+//        return result == PackageManager.PERMISSION_GRANTED
     }
 
     private fun RequestPermissions() {
         // this method is used to request the
         // permission for audio recording and storage.
-//        requestPermissions(arrayOf(RECORD_AUDIO, WRITE_EXTERNAL_STORAGE),
-//        REQUEST_AUDIO_PERMISSION_CODE)
-        requestPermissions(arrayOf(RECORD_AUDIO),
-            REQUEST_AUDIO_PERMISSION_CODE)
+        requestPermissions(arrayOf(RECORD_AUDIO, WRITE_EXTERNAL_STORAGE),
+        REQUEST_AUDIO_PERMISSION_CODE)
+//        requestPermissions(arrayOf(RECORD_AUDIO),
+//            REQUEST_AUDIO_PERMISSION_CODE)
 
 //        ActivityCompat.requestPermissions(
 //            this@MainActivity,

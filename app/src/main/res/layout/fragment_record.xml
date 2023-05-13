@@ -85,9 +85,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
-        android:layout_marginStart="155dp"
         android:layout_marginTop="40dp"
-        android:layout_marginEnd="156dp"
         android:layout_marginBottom="80dp"
         android:background="@drawable/circle_button"
         android:contentDescription="recordButton"
@@ -102,9 +100,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
-        android:layout_marginStart="155dp"
         android:layout_marginTop="40dp"
-        android:layout_marginEnd="156dp"
         android:layout_marginBottom="80dp"
         android:background="@drawable/circle_button"
         android:src="@drawable/ic_baseline_play_arrow_red_65"
@@ -119,9 +115,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
-        android:layout_marginStart="155dp"
         android:layout_marginTop="40dp"
-        android:layout_marginEnd="156dp"
         android:layout_marginBottom="80dp"
         android:background="@drawable/circle_button"
         android:src="@drawable/ic_baseline_stop_red_65"
@@ -188,6 +182,85 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <TextView
+        android:id="@+id/lbRecord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/itim"
+        android:text="Record"
+        android:textAlignment="center"
+        android:textColor="#43258a"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/recordBtn"
+        app:layout_constraintStart_toStartOf="@+id/recordBtn"
+        app:layout_constraintTop_toBottomOf="@+id/recordBtn" />
+
+    <TextView
+        android:id="@+id/lbPlaySyn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/itim"
+        android:text="Synthesis voice"
+        android:textAlignment="center"
+        android:textColor="#43258a"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/playBtn"
+        app:layout_constraintStart_toStartOf="@+id/playBtn"
+        app:layout_constraintTop_toBottomOf="@+id/playBtn" />
+
+    <TextView
+        android:id="@+id/lbPlayOrg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/itim"
+        android:text="Original voice"
+        android:textAlignment="center"
+        android:textColor="#43258a"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/playOrgBtn"
+        app:layout_constraintStart_toStartOf="@+id/playOrgBtn"
+        app:layout_constraintTop_toBottomOf="@+id/playOrgBtn" />
+
+    <TextView
+        android:id="@+id/lbRecAgain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/itim"
+        android:text="Reset"
+        android:textAlignment="center"
+        android:textColor="#43258a"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/recAgainBtn"
+        app:layout_constraintStart_toStartOf="@+id/recAgainBtn"
+        app:layout_constraintTop_toBottomOf="@+id/recAgainBtn" />
+
+    <TextView
+        android:id="@+id/lbStop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/itim"
+        android:text="Stop"
+        android:textAlignment="center"
+        android:textColor="#43258a"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/stopBtn"
+        app:layout_constraintStart_toStartOf="@+id/stopBtn"
+        app:layout_constraintTop_toBottomOf="@+id/stopBtn" />
 
 
     <!--This will display the status of our app when
