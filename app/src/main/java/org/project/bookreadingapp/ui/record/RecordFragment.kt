@@ -85,6 +85,8 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    private val fileExamplePath = "/sdcard/MyApp/audio/example.mp3"
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -190,6 +192,9 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
                             lbPlaySyn.visibility = View.VISIBLE
                             lbPlayOrg.visibility = View.VISIBLE
                             lbRecAgain.visibility = View.VISIBLE
+
+                            val file = File(fileExamplePath)
+                            file.delete()
                         }
                     }
 
@@ -269,8 +274,7 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
 
             //อันใหม่
             //val newButtonState = !(buttonStates[startTV.id] ?: false)
-            val exSynPath = "/sdcard/MyApp/audio/example.wav"
-            val synFile = File("/sdcard/MyApp/audio/example.wav")
+            val synFile = File(fileExamplePath)
             if (synFile.exists()) {
                 // file exists
                 statusTV?.text = "Playing synthesis voice..."
@@ -278,7 +282,7 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
                 lbStop.visibility = View.VISIBLE
                 lbPlaySyn.visibility = View.GONE
                 txtExample.setText(R.string.text_example_eng)
-                playMedia(exSynPath)
+                playMedia(fileExamplePath)
                 recordAgain.isClickable = false
                 playOrg.isClickable = false
                 mPlayer!!.setOnCompletionListener {
@@ -347,11 +351,9 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
         recordAgain?.setOnClickListener {
             // back to the beginning กลับไปเริ่มอัดใหม่ อุอิ
             // ค่อนข้างจะมั่วซั่ว อาจเจอบัคได้ นี่คือคำเตือน 555555555555555
-            val filePath = "/sdcard/MyApp/audio/example.wav"
-            val file = File(filePath)
-            val deleted = file.delete()
 
-            if (deleted) {
+
+
                 // File successfully deleted
                 txtExample.setText(R.string.text_example_thai)
                 playTV?.visibility = View.GONE
@@ -365,14 +367,7 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
                 lbPlaySyn.visibility = View.GONE
                 lbPlayOrg.visibility = View.GONE
                 lbRecord.visibility = View.VISIBLE
-            } else {
-                // Failed to delete the file
-                Toast.makeText(
-                    requireContext(),
-                    "Please try again.",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
+
 
             isStartTVVisible = startTV.isVisible
             isPlayTVVisible = playTV.isVisible
@@ -472,7 +467,7 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
 
     private fun callEmbedAPI(wav : Wav){
         val apiService = ApiService()
-        val exSynPath = "/sdcard/MyApp/audio/example.wav"
+        val exSynPath = "/sdcard/MyApp/audio/example.mp3"
         val call = apiService.getEmbed(wav)
         val txtExample: TextView = binding.textExample
         val progBarCircle: ProgressBar = binding.pBar
@@ -570,6 +565,7 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
             printWriter.close()
             fileWriter.close()
         }
+//        deleteFileOrFolder()
 
     }
 
@@ -731,6 +727,19 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
         statusTV?.text = "Recording Play Stopped"
     }
 
+    fun deleteFileOrFolder(fileOrFolder: File): Boolean {
+        var success = true
+        if (fileOrFolder.isDirectory) {
+            val files = fileOrFolder.listFiles()
+            if (files != null) {
+                for (file in files) {
+                    success = deleteFileOrFolder(file) && success
+                }
+            }
+        }
+        success = fileOrFolder.delete() && success
+        return success
+    }
 
 
     override fun onDestroyView() {
