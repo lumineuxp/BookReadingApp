@@ -31,6 +31,9 @@ class Storybooks : AppCompatActivity() {
     private var tale_id : Int? = null
 
     lateinit var playStory:ImageButton
+    lateinit var nextBtn:ImageButton
+    lateinit var backBtn:ImageButton
+
     lateinit var story:TextView
     var audioFiles = mutableListOf<String>()
     private var indexAudioFile = 0 // เก็บตำแหน่งไฟล์เสียงที่จะเล่น
@@ -79,8 +82,9 @@ class Storybooks : AppCompatActivity() {
         story = findViewById<TextView>(R.id.story_tale)
         story.text = currentSynAndText
 
-        val nextBtn:ImageButton = findViewById(R.id.NextButton)
-            nextBtn.setOnClickListener {
+        nextBtn = findViewById(R.id.NextButton)
+        nextBtn.setOnClickListener {
+            if (!isPlaying) {
                 currentPage += 1
                 if (currentPage >= textlist!!.size) {
                     currentPage -= 1
@@ -91,27 +95,29 @@ class Storybooks : AppCompatActivity() {
                 val currentText = currentSynAndText
                 // ใส่โค้ดที่จำเป็นสำหรับแสดงข้อความและเสียงตามลำดับ
                 story.text = currentText
-
             }
+        }
 
-        val backBtn:ImageButton = findViewById(R.id.BackButton)
+        backBtn = findViewById(R.id.BackButton)
         backBtn.setOnClickListener {
-            currentPage -= 1
-            if (currentPage <= -1) {
-                currentPage = 0
+            if (!isPlaying) {
+                currentPage -= 1
+                if (currentPage <= -1) {
+                    currentPage = 0
+                }
+
+                currentSynAndText = textlist!![currentPage]
+
+                val currentText = currentSynAndText
+                // ใส่โค้ดที่จำเป็นสำหรับแสดงข้อความและเสียงตามลำดับ
+                story.text = currentText
             }
-
-            currentSynAndText = textlist!![currentPage]
-
-            val currentText = currentSynAndText
-            // ใส่โค้ดที่จำเป็นสำหรับแสดงข้อความและเสียงตามลำดับ
-            story.text = currentText
 
         }
 
 //        convertAndSaveAudio(synlist!!)
 
-        val fileSynPath = Environment.getExternalStorageDirectory().absolutePath + "/sdcard/Audio/" + tale_id + "/"
+        val fileSynPath = Environment.getExternalStorageDirectory().absolutePath + "/MyApp/audio/" + tale_id + "/"
         val fileSynDir = File(fileSynPath)
         val files = fileSynDir.listFiles()
 
@@ -122,19 +128,26 @@ class Storybooks : AppCompatActivity() {
             }
         }
 
-            playStory = findViewById(R.id.play_story)
-            playStory.setOnClickListener {
-                if (!isPlaying && fileSyn != null){
-                    isPlaying = true
-                    playStory.setImageResource(R.drawable.pause_circle_blue)
-                    playSyn()
-
-                }else{
-                    isPlaying = false
-                    playStory.setImageResource(R.drawable.play_circle_blue)
-                    stopPlaySyn()
-                }
+        playStory = findViewById(R.id.play_story)
+        playStory.setOnClickListener {
+            if (!isPlaying && fileSyn != null) {
+                isPlaying = true
+                playStory.setImageResource(R.drawable.pause_circle_blue)
+                playSyn()
+                nextBtn.setImageResource(R.drawable.next_gray)
+                nextBtn.isEnabled = false
+                backBtn.setImageResource(R.drawable.back_gray)
+                backBtn.isEnabled = false
+            } else {
+                isPlaying = false
+                playStory.setImageResource(R.drawable.play_circle_blue)
+                stopPlaySyn()
+                nextBtn.setImageResource(R.drawable.next_blue)
+                nextBtn.isEnabled = true
+                backBtn.setImageResource(R.drawable.back_blue)
+                backBtn.isEnabled = true
             }
+        }
 
     }
 
@@ -143,7 +156,7 @@ class Storybooks : AppCompatActivity() {
         var fileNumber = 0
         var fileName = "SynVoice_$fileNumber.mp3"
         var file =
-            File(Environment.getExternalStorageDirectory().absolutePath + "/sdcard/Audio/" + tale_id + "/" + fileName)
+            File(Environment.getExternalStorageDirectory().absolutePath + "/MyApp/audio/" + tale_id + "/" + fileName)
         val parentDir = file.parentFile
         if (!parentDir.exists()) {
             parentDir.mkdirs()
@@ -164,7 +177,7 @@ class Storybooks : AppCompatActivity() {
                 fileNumber++
                 fileName = "SynVoice_$fileNumber.mp3"
                 file =
-                    File(Environment.getExternalStorageDirectory().absolutePath + "/sdcard/Audio/" + tale_id + "/" + fileName)
+                    File(Environment.getExternalStorageDirectory().absolutePath + "/MyApp/audio/" + tale_id + "/" + fileName)
             }
             file.createNewFile()
             val outputStream = FileOutputStream(file)
@@ -177,7 +190,7 @@ class Storybooks : AppCompatActivity() {
     private fun playSyn() {
 
         //fileSyn = Environment.getExternalStorageDirectory().absolutePath + "/sdcard/Audio/" + fileName
-        var fileSynTest = "${Environment.getExternalStorageDirectory().absolutePath}/sdcard/Audio/${tale_id}/${audioFiles[currentPage]}"
+        var fileSynTest = "${Environment.getExternalStorageDirectory().absolutePath}/MyApp/audio/${tale_id}/${audioFiles[currentPage]}"
 
         player = MediaPlayer()
         try {
@@ -198,6 +211,10 @@ class Storybooks : AppCompatActivity() {
                     playSyn()
                 } else {
                     playStory.setImageResource(R.drawable.play_circle_blue)
+                    nextBtn.setImageResource(R.drawable.next_blue)
+                    nextBtn.isEnabled = true
+                    backBtn.setImageResource(R.drawable.back_blue)
+                    backBtn.isEnabled = true
                     isPlaying = false
                 }
             }

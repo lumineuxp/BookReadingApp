@@ -230,6 +230,7 @@ class MyAdapter(val context: Context, val TaleList:List<Tales>) : RecyclerView.A
             // Now "str" contains the contents of the file
         } else {
             // The file does not exist
+            str = "no"
             Log.e("error","error to find vector file")
         }
 
@@ -269,7 +270,7 @@ class MyAdapter(val context: Context, val TaleList:List<Tales>) : RecyclerView.A
         var fileNumber = 0
         var fileName = "SynVoice_$fileNumber.mp3"
         var file =
-            File(Environment.getExternalStorageDirectory().absolutePath + "/sdcard/Audio/" + id + "/" + fileName)
+            File(Environment.getExternalStorageDirectory().absolutePath + "/MyApp/audio/" + id + "/" + fileName)
         val parentDir = file.parentFile
         Log.i("parent dir", parentDir.toString())
 
@@ -285,7 +286,7 @@ class MyAdapter(val context: Context, val TaleList:List<Tales>) : RecyclerView.A
         var fileNumber = 0
         var fileName = "SynVoice_$fileNumber.mp3"
         var file =
-            File(Environment.getExternalStorageDirectory().absolutePath + "/sdcard/Audio/" + id + "/" + fileName)
+            File(Environment.getExternalStorageDirectory().absolutePath + "/MyApp/audio/" + id + "/" + fileName)
         val parentDir = file.parentFile
         if (!parentDir.exists()) {
             parentDir.mkdirs()
@@ -307,7 +308,7 @@ class MyAdapter(val context: Context, val TaleList:List<Tales>) : RecyclerView.A
                 fileNumber++
                 fileName = "SynVoice_$fileNumber.mp3"
                 file =
-                    File(Environment.getExternalStorageDirectory().absolutePath + "/sdcard/Audio/" + id + "/" + fileName)
+                    File(Environment.getExternalStorageDirectory().absolutePath + "/MyApp/audio/" + id + "/" + fileName)
             }
             file.createNewFile()
             val outputStream = FileOutputStream(file)
