@@ -85,6 +85,8 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    private val fileExamplePath = "/sdcard/MyApp/audio/example.mp3"
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -134,14 +136,30 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
         val lbPlaySyn: TextView = binding.lbPlaySyn
         val lbStop: TextView = binding.lbStop
 
-        startTV.isVisible = isStartTVVisible
-        playTV.isVisible = isPlayTVVisible
-        playOrg.isVisible = isPlayOrgVisible
-        recordAgain.isVisible = isRecAgainVisible
-        lbRecord.isVisible = isRecordLBVisible
-        lbPlaySyn.isVisible = isPlaySynLBVisible
-        lbPlayOrg.isVisible = isPlayOrgLBVisible
-        lbRecAgain.isVisible = isRecAgainLBVisible
+//        var hasVector = hasVector()
+
+        if(hasVector()){
+
+            playTV?.visibility = View.VISIBLE
+            playOrg?.visibility = View.VISIBLE
+            recordAgain?.visibility = View.VISIBLE
+            lbRecord.visibility = View.GONE
+            lbPlaySyn.visibility = View.VISIBLE
+            lbPlayOrg.visibility = View.VISIBLE
+            lbRecAgain.visibility = View.VISIBLE
+
+        }else{
+            startTV.isVisible = isStartTVVisible
+            playTV.isVisible = isPlayTVVisible
+            playOrg.isVisible = isPlayOrgVisible
+            recordAgain.isVisible = isRecAgainVisible
+            lbRecord.isVisible = isRecordLBVisible
+            lbPlaySyn.isVisible = isPlaySynLBVisible
+            lbPlayOrg.isVisible = isPlayOrgLBVisible
+            lbRecAgain.isVisible = isRecAgainLBVisible
+        }
+
+
 //        startTV.isVisible = buttonStates[startTV.id] ?: true
 //        playTV.isVisible = buttonStates[playTV.id] ?: false
 //        playOrg.isVisible = buttonStates[playOrg.id] ?: false
@@ -192,6 +210,10 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
                             lbPlaySyn.visibility = View.VISIBLE
                             lbPlayOrg.visibility = View.VISIBLE
                             lbRecAgain.visibility = View.VISIBLE
+
+//                            deleteFileOrFolder( File(context?.filesDir, "vector.txt"))
+                            deleteFileOrFolder(File(fileExamplePath))
+
                         }
                     }
 
@@ -270,8 +292,7 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
 
             //อันใหม่
             //val newButtonState = !(buttonStates[startTV.id] ?: false)
-            val exSynPath = "/sdcard/MyApp/audio/example.wav"
-            val synFile = File("/sdcard/MyApp/audio/example.wav")
+            val synFile = File(fileExamplePath)
             if (synFile.exists()) {
                 // file exists
                 statusTV?.text = "Playing synthesis voice..."
@@ -279,7 +300,7 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
                 lbStop.visibility = View.VISIBLE
                 lbPlaySyn.visibility = View.GONE
                 txtExample.setText(R.string.text_example_eng)
-                playMedia(exSynPath)
+                playMedia(fileExamplePath)
                 recordAgain.isClickable = false
                 playOrg.isClickable = false
                 mPlayer!!.setOnCompletionListener {
@@ -348,11 +369,9 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
         recordAgain?.setOnClickListener {
             // back to the beginning กลับไปเริ่มอัดใหม่ อุอิ
             // ค่อนข้างจะมั่วซั่ว อาจเจอบัคได้ นี่คือคำเตือน 555555555555555
-            val filePath = "/sdcard/MyApp/audio/example.wav"
-            val file = File(filePath)
-            val deleted = file.delete()
 
-            if (deleted) {
+
+
                 // File successfully deleted
                 txtExample.setText(R.string.text_example_thai)
                 playTV?.visibility = View.GONE
@@ -366,14 +385,7 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
                 lbPlaySyn.visibility = View.GONE
                 lbPlayOrg.visibility = View.GONE
                 lbRecord.visibility = View.VISIBLE
-            } else {
-                // Failed to delete the file
-                Toast.makeText(
-                    requireContext(),
-                    "Please try again.",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
+
 
             isStartTVVisible = startTV.isVisible
             isPlayTVVisible = playTV.isVisible
@@ -466,14 +478,13 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
         wav.wav = wavBase64
 //        wav.wav = embth
 
-
         callEmbedAPI(wav)
 
     }
 
     private fun callEmbedAPI(wav : Wav){
         val apiService = ApiService()
-        val exSynPath = "/sdcard/MyApp/audio/example.wav"
+        val exSynPath = "/sdcard/MyApp/audio/example.mp3"
         val call = apiService.getEmbed(wav)
         val txtExample: TextView = binding.textExample
         val progBarCircle: ProgressBar = binding.pBar
@@ -572,6 +583,23 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
             fileWriter.close()
         }
 
+        deleteFileOrFolder(File(Environment.getExternalStorageDirectory().absolutePath + "/MyApp/audio/story"))
+
+    }
+    private fun hasVector() : Boolean {
+        val fileName = "vector.txt"
+        val file = File(context?.filesDir, fileName)
+        var status:Boolean
+
+        if (file.exists()) {
+            // Now "str" contains the contents of the file
+            status = true
+        } else {
+            // The file does not exist
+            status = false
+        }
+
+        return status
     }
 
     private fun convertBase64ToAudio(base64String: String, filePath: String) {
@@ -732,6 +760,19 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
         statusTV?.text = "Recording Play Stopped"
     }
 
+    fun deleteFileOrFolder(fileOrFolder: File): Boolean {
+        var success = true
+        if (fileOrFolder.isDirectory) {
+            val files = fileOrFolder.listFiles()
+            if (files != null) {
+                for (file in files) {
+                    success = deleteFileOrFolder(file) && success
+                }
+            }
+        }
+        success = fileOrFolder.delete() && success
+        return success
+    }
 
 
     override fun onDestroyView() {
