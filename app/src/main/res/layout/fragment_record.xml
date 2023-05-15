@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/custom_bg"
     tools:context=".ui.record.RecordFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="330dp"
+        android:layout_height="300dp"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -22,7 +23,8 @@
             android:layout_marginEnd="8dp"
             android:fontFamily="@font/itim"
             android:textAlignment="center"
-            android:textSize="20sp" />
+            android:textColor="#7b2cbf"
+            android:textSize="22sp" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="370dp"
@@ -30,7 +32,7 @@
             android:layout_gravity="center_horizontal|center_vertical"
             android:layout_marginTop="20dp"
             android:textAlignment="center"
-            app:cardBackgroundColor="#FDE8A8"
+            app:cardBackgroundColor="#fbf8cc"
             app:cardCornerRadius="20dp"
             app:contentPadding="20dp">
 
@@ -80,187 +82,193 @@
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
 
-    <ImageButton
-        android:id="@+id/recordBtn"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
+    <androidx.cardview.widget.CardView
+        android:layout_width="382dp"
+        android:layout_height="270dp"
         android:layout_marginTop="40dp"
-        android:layout_marginBottom="80dp"
-        android:background="@drawable/circle_button"
-        android:contentDescription="recordButton"
-        android:src="@drawable/ic_baseline_mic_gray_65"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:backgroundTint="#E6f1c0e8"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.448"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <ImageButton
+            android:id="@+id/recAgainBtn"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="30dp"
+            android:background="@drawable/circle_button"
+            android:contentDescription="record voice again button"
+            android:src="@drawable/ic_baseline_replay_24"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/lbRecAgain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="49dp"
+            android:layout_marginTop="200dp"
+            android:fontFamily="@font/itim"
+            android:text="Reset"
+            android:textAlignment="center"
+            android:textColor="#0096c7"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="invisible" />
+
+        <ImageButton
+            android:id="@+id/playOrgBtn"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="272dp"
+            android:background="@drawable/circle_button"
+            android:contentDescription="play original voice button"
+            android:src="@drawable/ic_baseline_record_voice_over_24"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/lbPlayOrg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="260dp"
+            android:layout_marginTop="200dp"
+            android:fontFamily="@font/itim"
+            android:text="Original voice"
+            android:textAlignment="center"
+            android:textColor="#0096c7"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="invisible" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="130dp"
+            android:layout_height="165dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="60dp"
+            android:backgroundTint="#66fff9f1"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+
+            <ProgressBar
+                android:id="@+id/pBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginRight="0dp"
+                android:indeterminateDrawable="@drawable/progress_icon"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/recordBtn"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/circle_button"
+                android:contentDescription="recordButton"
+                android:src="@drawable/ic_baseline_mic_gray_65" />
+
+            <TextView
+                android:id="@+id/lbRecord"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="130dp"
+                android:fontFamily="@font/itim"
+                android:text="Record"
+                android:textAlignment="center"
+                android:textColor="#c9184a"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteY="15dp" />
+
+            <ImageButton
+                android:id="@+id/playBtn"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/circle_button"
+                android:src="@drawable/ic_baseline_play_arrow_red_65"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/lbPlaySyn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="130dp"
+                android:fontFamily="@font/itim"
+                android:text="Synthesis voice"
+                android:textAlignment="center"
+                android:textColor="#c9184a"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                tools:layout_editor_absoluteY="15dp" />
+
+            <ImageButton
+                android:id="@+id/stopBtn"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/circle_button"
+                android:src="@drawable/ic_baseline_stop_red_65"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/lbStop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="130dp"
+                android:fontFamily="@font/itim"
+                android:text="Stop"
+                android:textAlignment="center"
+                android:textColor="#c9184a"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="invisible" />
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="13dp"
+        android:backgroundTint="#66fff9f1"
+        app:cardCornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-    <ImageButton
-        android:id="@+id/playBtn"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="80dp"
-        android:background="@drawable/circle_button"
-        android:src="@drawable/ic_baseline_play_arrow_red_65"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-    <ImageButton
-        android:id="@+id/stopBtn"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="80dp"
-        android:background="@drawable/circle_button"
-        android:src="@drawable/ic_baseline_stop_red_65"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-    <ImageButton
-        android:id="@+id/playOrgBtn"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="80dp"
-        android:background="@drawable/circle_button"
-        android:contentDescription="play original voice button"
-        android:src="@drawable/ic_baseline_record_voice_over_24"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-    <ImageButton
-        android:id="@+id/recAgainBtn"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="80dp"
-        android:background="@drawable/circle_button"
-        android:contentDescription="record voice again button"
-        android:src="@drawable/ic_baseline_replay_24"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-    <ProgressBar
-        android:id="@+id/pBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginTop="50dp"
-        android:indeterminateDrawable="@drawable/progress_icon"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-    <TextView
-        android:id="@+id/idTVstatus"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/itim"
-        android:text="@string/status"
-        android:textAlignment="center"
-        android:textColor="#43258a"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-    <TextView
-        android:id="@+id/lbRecord"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:fontFamily="@font/itim"
-        android:text="Record"
-        android:textAlignment="center"
-        android:textColor="#43258a"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/recordBtn"
-        app:layout_constraintStart_toStartOf="@+id/recordBtn"
-        app:layout_constraintTop_toBottomOf="@+id/recordBtn" />
-
-    <TextView
-        android:id="@+id/lbPlaySyn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:fontFamily="@font/itim"
-        android:text="Synthesis voice"
-        android:textAlignment="center"
-        android:textColor="#43258a"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/playBtn"
-        app:layout_constraintStart_toStartOf="@+id/playBtn"
-        app:layout_constraintTop_toBottomOf="@+id/playBtn" />
-
-    <TextView
-        android:id="@+id/lbPlayOrg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:fontFamily="@font/itim"
-        android:text="Original voice"
-        android:textAlignment="center"
-        android:textColor="#43258a"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/playOrgBtn"
-        app:layout_constraintStart_toStartOf="@+id/playOrgBtn"
-        app:layout_constraintTop_toBottomOf="@+id/playOrgBtn" />
-
-    <TextView
-        android:id="@+id/lbRecAgain"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:fontFamily="@font/itim"
-        android:text="Reset"
-        android:textAlignment="center"
-        android:textColor="#43258a"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/recAgainBtn"
-        app:layout_constraintStart_toStartOf="@+id/recAgainBtn"
-        app:layout_constraintTop_toBottomOf="@+id/recAgainBtn" />
-
-    <TextView
-        android:id="@+id/lbStop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:fontFamily="@font/itim"
-        android:text="Stop"
-        android:textAlignment="center"
-        android:textColor="#43258a"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/stopBtn"
-        app:layout_constraintStart_toStartOf="@+id/stopBtn"
-        app:layout_constraintTop_toBottomOf="@+id/stopBtn" />
+        <TextView
+            android:id="@+id/idTVstatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/itim"
+            android:text="@string/status"
+            android:textAlignment="center"
+            android:textColor="#43258a"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </androidx.cardview.widget.CardView>
 
 
     <!--This will display the status of our app when
