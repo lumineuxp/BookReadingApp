@@ -117,7 +117,7 @@ class Storybooks : AppCompatActivity() {
 
 //        convertAndSaveAudio(synlist!!)
 
-        val fileSynPath = Environment.getExternalStorageDirectory().absolutePath + "/MyApp/audio/" + tale_id + "/"
+        val fileSynPath = Environment.getExternalStorageDirectory().absolutePath + "/MyApp/audio/story/" + tale_id + "/"
         val fileSynDir = File(fileSynPath)
         val files = fileSynDir.listFiles()
 
@@ -156,7 +156,7 @@ class Storybooks : AppCompatActivity() {
         var fileNumber = 0
         var fileName = "SynVoice_$fileNumber.mp3"
         var file =
-            File(Environment.getExternalStorageDirectory().absolutePath + "/MyApp/audio/" + tale_id + "/" + fileName)
+            File(Environment.getExternalStorageDirectory().absolutePath + "/MyApp/audio/story/" + tale_id + "/" + fileName)
         val parentDir = file.parentFile
         if (!parentDir.exists()) {
             parentDir.mkdirs()
@@ -177,7 +177,7 @@ class Storybooks : AppCompatActivity() {
                 fileNumber++
                 fileName = "SynVoice_$fileNumber.mp3"
                 file =
-                    File(Environment.getExternalStorageDirectory().absolutePath + "/MyApp/audio/" + tale_id + "/" + fileName)
+                    File(Environment.getExternalStorageDirectory().absolutePath + "/MyApp/audio/story/" + tale_id + "/" + fileName)
             }
             file.createNewFile()
             val outputStream = FileOutputStream(file)
@@ -190,7 +190,7 @@ class Storybooks : AppCompatActivity() {
     private fun playSyn() {
 
         //fileSyn = Environment.getExternalStorageDirectory().absolutePath + "/sdcard/Audio/" + fileName
-        var fileSynTest = "${Environment.getExternalStorageDirectory().absolutePath}/MyApp/audio/${tale_id}/${audioFiles[currentPage]}"
+        var fileSynTest = "${Environment.getExternalStorageDirectory().absolutePath}/MyApp/audio/story/${tale_id}/${audioFiles[currentPage]}"
 
         player = MediaPlayer()
         try {
