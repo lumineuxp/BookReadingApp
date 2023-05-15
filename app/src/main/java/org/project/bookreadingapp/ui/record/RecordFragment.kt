@@ -136,14 +136,30 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
         val lbPlaySyn: TextView = binding.lbPlaySyn
         val lbStop: TextView = binding.lbStop
 
-        startTV.isVisible = isStartTVVisible
-        playTV.isVisible = isPlayTVVisible
-        playOrg.isVisible = isPlayOrgVisible
-        recordAgain.isVisible = isRecAgainVisible
-        lbRecord.isVisible = isRecordLBVisible
-        lbPlaySyn.isVisible = isPlaySynLBVisible
-        lbPlayOrg.isVisible = isPlayOrgLBVisible
-        lbRecAgain.isVisible = isRecAgainLBVisible
+//        var hasVector = hasVector()
+
+        if(hasVector()){
+
+            playTV?.visibility = View.VISIBLE
+            playOrg?.visibility = View.VISIBLE
+            recordAgain?.visibility = View.VISIBLE
+            lbRecord.visibility = View.GONE
+            lbPlaySyn.visibility = View.VISIBLE
+            lbPlayOrg.visibility = View.VISIBLE
+            lbRecAgain.visibility = View.VISIBLE
+
+        }else{
+            startTV.isVisible = isStartTVVisible
+            playTV.isVisible = isPlayTVVisible
+            playOrg.isVisible = isPlayOrgVisible
+            recordAgain.isVisible = isRecAgainVisible
+            lbRecord.isVisible = isRecordLBVisible
+            lbPlaySyn.isVisible = isPlaySynLBVisible
+            lbPlayOrg.isVisible = isPlayOrgLBVisible
+            lbRecAgain.isVisible = isRecAgainLBVisible
+        }
+
+
 //        startTV.isVisible = buttonStates[startTV.id] ?: true
 //        playTV.isVisible = buttonStates[playTV.id] ?: false
 //        playOrg.isVisible = buttonStates[playOrg.id] ?: false
@@ -193,8 +209,9 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
                             lbPlayOrg.visibility = View.VISIBLE
                             lbRecAgain.visibility = View.VISIBLE
 
-                            val file = File(fileExamplePath)
-                            file.delete()
+//                            deleteFileOrFolder( File(context?.filesDir, "vector.txt"))
+                            deleteFileOrFolder(File(fileExamplePath))
+
                         }
                     }
 
@@ -460,7 +477,6 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
         wav.wav = wavBase64
 //        wav.wav = embth
 
-
         callEmbedAPI(wav)
 
     }
@@ -565,8 +581,24 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
             printWriter.close()
             fileWriter.close()
         }
-//        deleteFileOrFolder()
 
+        deleteFileOrFolder(File(Environment.getExternalStorageDirectory().absolutePath + "/MyApp/audio/story"))
+
+    }
+    private fun hasVector() : Boolean {
+        val fileName = "vector.txt"
+        val file = File(context?.filesDir, fileName)
+        var status:Boolean
+
+        if (file.exists()) {
+            // Now "str" contains the contents of the file
+            status = true
+        } else {
+            // The file does not exist
+            status = false
+        }
+
+        return status
     }
 
     private fun convertBase64ToAudio(base64String: String, filePath: String) {
