@@ -163,6 +163,7 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
                 if (CheckPermissions()) {
                     startRecording()
                     startTV.setImageResource(R.drawable.ic_baseline_mic_red_65)
+                    isRecording = true
 
                     val countDownTimer = object : CountDownTimer(10000, 100) {
                         override fun onTick(millisUntilFinished: Long) {
@@ -177,6 +178,7 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
                         override fun onFinish() {
                             //เผื่อใช้
                             // mTextField.setText("done!")
+                            isRecording = false
                             statusTV?.text = "Finished!"
                             //recordingTV?.visibility = View.GONE
                             startTV.setImageResource(R.drawable.ic_baseline_mic_gray_65)
@@ -196,7 +198,6 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
                     countDownTimer.start()
                     progressBar.visibility = View.VISIBLE
                     statusTV?.text = "Recording..."
-                    isRecording = false
                 } else {
                     // if audio recording permissions are
                     // not granted by user below method will
