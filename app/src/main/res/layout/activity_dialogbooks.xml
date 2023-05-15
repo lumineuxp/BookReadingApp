@@ -52,5 +52,16 @@
         app:layout_constraintStart_toStartOf="@+id/dialog_image"
         app:layout_constraintTop_toBottomOf="@+id/dialog_image"></ProgressBar>
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="กรุณาอัดเสียงที่หน้า Record ก่อน"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/dialog_image"
+        app:layout_constraintStart_toStartOf="@+id/dialog_image"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_image" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
