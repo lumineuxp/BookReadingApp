@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.books.Storybooks">
+
+
+    <ImageView
+        android:id="@+id/story_img"
+        android:layout_width="249dp"
+        android:layout_height="232dp"
+        android:layout_marginStart="81dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="81dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/story_tale"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/story_title"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/story_title"
+        android:layout_width="321dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="16dp"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/itim"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Title" />
+
+    <TextView
+        android:id="@+id/story_tale"
+        android:layout_width="381dp"
+        android:layout_height="328dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        android:textAlignment="viewStart"
+        android:textSize="20sp"
+        android:fontFamily="@font/itim"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.125"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/story_img"
+        tools:text="A MONKEY perched upon a lofty tree saw some Fishermen casting their nets into a river, and narrowly watched their proceedings.The Fishermen after a while gave up fishing, and on going home to dinner left their nets upon the bank." />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="372dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <ImageButton
+            android:id="@+id/BackButton"
+            android:layout_width="111dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:contentDescription="back button"
+            android:src="@drawable/back_blue" />
+
+        <ImageButton
+            android:id="@+id/play_story"
+            android:layout_width="113dp"
+            android:layout_height="72dp"
+            android:background="@null"
+            android:contentDescription="play story"
+            app:srcCompat="@drawable/play_circle_blue" />
+
+        <ImageButton
+            android:id="@+id/NextButton"
+            android:layout_width="115dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:contentDescription="next button"
+            app:srcCompat="@drawable/next_blue" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

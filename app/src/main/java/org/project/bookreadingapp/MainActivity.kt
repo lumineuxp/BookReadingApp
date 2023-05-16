@@ -8,6 +8,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.project.bookreadingapp.databinding.ActivityMainBinding
+import org.project.bookreadingapp.ui.record.RecordFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,6 +16,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        supportActionBar?.hide()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -29,7 +32,8 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_record, R.id.navigation_books
+//                R.id.navigation_home, R.id.navigation_record, R.id.navigation_books
+                R.id.navigation_record, R.id.navigation_books
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
