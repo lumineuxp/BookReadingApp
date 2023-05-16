@@ -2,6 +2,7 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/itim</item>
+        <item>@font/lilita_one</item>
         <item>@font/mali_extralight</item>
         <item>@font/mali_semibold</item>
     </array>

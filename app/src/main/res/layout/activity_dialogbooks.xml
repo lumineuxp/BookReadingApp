@@ -3,65 +3,90 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraint"
-    android:layout_width="410dp"
+    android:layout_width="wrap_content"
     android:layout_height="350dp"
-    android:background="#7FBFE1"
+    android:background="@drawable/bg3"
     tools:context=".ui.books.Dialogbooks">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="233dp"
+        android:layout_height="247dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/book_cover" />
 
     <ImageView
         android:id="@+id/dialog_image"
         android:layout_width="159dp"
         android:layout_height="195dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="15dp"
         android:src="@mipmap/ic_launcher"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.43"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
 
     <Button
         android:id="@+id/dialog_Btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#ff8fab"
+        android:fontFamily="@font/lilita_one"
         android:text="READ ME"
-        app:layout_constraintEnd_toEndOf="@+id/dialog_image"
-        app:layout_constraintStart_toStartOf="@+id/dialog_image"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_image" />
+        android:textSize="20dp"
+        android:shadowColor="#ffe5ec"
+        android:shadowRadius="20"
+        app:cornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-<!--    <ProgressBar-->
-<!--        android:id="@+id/pBar"-->
-<!--        style="?android:color"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="15dp"-->
-<!--        android:visibility="invisible"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/dialog_image"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/dialog_image"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/dialog_image"></ProgressBar>-->
+    <!--    <ProgressBar-->
+    <!--        android:id="@+id/pBar"-->
+    <!--        style="?android:color"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="15dp"-->
+    <!--        android:visibility="invisible"-->
+    <!--        app:layout_constraintEnd_toEndOf="@+id/dialog_image"-->
+    <!--        app:layout_constraintStart_toStartOf="@+id/dialog_image"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/dialog_image"></ProgressBar>-->
 
     <ProgressBar
         android:id="@+id/pBar"
         style="?android:attr/progressBarStyle"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginTop="15dp"
         android:indeterminateDrawable="@drawable/progress_icon"
         android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/dialog_image"
-        app:layout_constraintStart_toStartOf="@+id/dialog_image"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_image"></ProgressBar>
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"></ProgressBar>
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="กรุณาอัดเสียงที่หน้า Record ก่อน"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/lilita_one"
+        android:shadowColor="@color/white"
+        android:shadowRadius="20"
+        android:text="Please record and synthesize voice!"
+        android:textAlignment="center"
+        android:textColor="#fb6f92"
+        android:textSize="22dp"
         android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/dialog_image"
-        app:layout_constraintStart_toStartOf="@+id/dialog_image"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_image" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

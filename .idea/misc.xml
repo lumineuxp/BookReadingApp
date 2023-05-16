@@ -3,9 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/drawable/circle_button.xml" value="0.2555" />
+        <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/drawable/circle_button2.xml" value="0.2555" />
         <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/drawable/custom_bg.xml" value="0.2545" />
         <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/drawable/custom_loading.xml" value="0.2135" />
         <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/drawable/custom_progress_bar_horizontal.xml" value="0.2555" />
+        <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/drawable/ic_baseline_info.xml" value="0.2555" />
         <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/drawable/ic_baseline_menu_book_24.xml" value="0.2555" />
         <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/drawable/ic_baseline_mic_gray_65.xml" value="0.2545" />
         <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/drawable/ic_baseline_play_arrow_red_65.xml" value="0.2545" />
@@ -19,7 +22,7 @@
         <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/drawable/round_corner.xml" value="0.2555" />
         <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/drawable/rounded.xml" value="0.2555" />
         <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/font/itim.xml" value="0.28020833333333334" />
-        <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/layout/activity_dialogbooks.xml" value="0.20446096654275092" />
+        <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/layout/activity_dialogbooks.xml" value="0.264" />
         <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/layout/activity_help.xml" value="0.25" />
         <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/layout/activity_storybooks.xml" value="0.25" />
@@ -27,6 +30,7 @@
         <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/layout/fragment_books.xml" value="0.25" />
         <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/layout/fragment_record.xml" value="0.264" />
+        <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/layout/items_book.xml" value="0.4" />
         <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/layout/round_corner.xml" value="0.25" />
         <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25" />
         <entry key="..\:/AndroidProject/BookReadingApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2135" />
