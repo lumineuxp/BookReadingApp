@@ -4,4 +4,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Help"/>
+    android:background="@drawable/bg1"
+    tools:context=".Help">
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/itim"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="Q: หากเสียงที่สังเคราะห์ได้ออกมาไม่ชัด ควรแก้ไขอย่างไร"
+        android:textColor="#a4133c"
+        android:textSize="22dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/itim"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="A: ทำการอัดเสียงโดยอยู่ในสภาพแวดล้อมที่มีเสียงรบกวนน้อยที่สุด และเมื่อกดปุ่มอัดเสียงแล้ว ควรเริ่มอ่านตามประโยคที่กำหนดทันที หรือสามารถเริ่มอ่านพร้อมกับกดปุ่มอัดเสียงได้เช่นกัน"
+        android:textColor="#1e6091"
+        android:textSize="22dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/bear_read" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

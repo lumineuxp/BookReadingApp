@@ -2,6 +2,7 @@ package org.project.bookreadingapp.ui.record
 
 import android.Manifest.permission.RECORD_AUDIO
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.content.Intent
 //import android.R
 import android.content.pm.PackageManager
 import android.media.MediaPlayer
@@ -23,6 +24,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import org.project.bookreadingapp.Help
+import org.project.bookreadingapp.Instructions
 import org.project.bookreadingapp.R
 import org.project.bookreadingapp.data.Embed
 import org.project.bookreadingapp.data.Wav
@@ -135,6 +138,7 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
         val lbPlayOrg: TextView = binding.lbPlayOrg
         val lbPlaySyn: TextView = binding.lbPlaySyn
         val lbStop: TextView = binding.lbStop
+        val infoButton: ImageButton = binding.infoBtn
 
 //        var hasVector = hasVector()
 
@@ -164,6 +168,11 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
 //        playTV.isVisible = buttonStates[playTV.id] ?: false
 //        playOrg.isVisible = buttonStates[playOrg.id] ?: false
 //        recordAgain.isVisible = buttonStates[recordAgain.id] ?: false
+
+        infoButton.setOnClickListener {
+            val intent = Intent(activity, Help::class.java)
+            startActivity(intent)
+        }
 
         startTV?.setOnClickListener { // start recording method will
             // start the recording of audio.
