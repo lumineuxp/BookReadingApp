@@ -365,6 +365,7 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
             lbStop.visibility = View.GONE
             playTV?.visibility = View.VISIBLE
             lbPlaySyn.visibility = View.VISIBLE
+            isPlaying = false
             pausePlaying()
             recordAgain.isClickable = true
             playOrg.isClickable = true
@@ -741,14 +742,7 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
         }
     }
 
-    //จะได้ใช้ไหมเดี๋ยวจะดูอีกที
-    //แต่อาจจะไม่ใช้แล้ว เพราะบังคับให้อัด 10 วิรวดเดียวแบบไม่กดหยุดไปเลย
-    //ชั้นบังคับ TvT ห้ามกดหยุด ม่ายยย
     fun pauseRecording() {
-        stopTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.gray))
-        startTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.purple_200))
-        playTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.purple_200))
-        stopplayTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.purple_200))
 
         // below method will stop
         // the audio recording.
@@ -766,10 +760,7 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
         // class and pause the playing of our recorded audio.
         mPlayer?.release()
         mPlayer = null
-        stopTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.gray))
-        startTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.purple_200))
-        playTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.purple_200))
-        stopplayTV?.setBackgroundColor(resources.getColor(org.project.bookreadingapp.R.color.gray))
+        isPlaying = false
         statusTV?.text = "Recording Play Stopped"
     }
 
