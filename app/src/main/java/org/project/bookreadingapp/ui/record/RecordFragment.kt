@@ -1,5 +1,6 @@
 package org.project.bookreadingapp.ui.record
 
+import android.Manifest
 import android.Manifest.permission.RECORD_AUDIO
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.content.Intent
@@ -44,6 +45,7 @@ import java.io.PrintWriter
 
 class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
 
+    private val PERMISSIONS_REQUEST_CODE = 123
     // Initializing all variables..
     private var startTV: TextView? = null
     private var stopTV: TextView? = null
@@ -79,7 +81,7 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
     //wav in base64 create when record and use when call API
     private var wavBase64 : String? = null
     // constant for storing audio permission
-    val REQUEST_AUDIO_PERMISSION_CODE = 1
+    //val REQUEST_AUDIO_PERMISSION_CODE = 1
 
 
     private var _binding: FragmentRecordBinding? = null
@@ -117,10 +119,10 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
         _binding = FragmentRecordBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textRecord
-        recordViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+//        val textView: TextView = binding.textRecord
+//        recordViewModel.text.observe(viewLifecycleOwner) {
+//            textView.text = it
+//        }
 
         // initialize all variables with their layout items.
         val statusTV: TextView = binding.idTVstatus
@@ -233,7 +235,8 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
                     // if audio recording permissions are
                     // not granted by user below method will
                     // ask for runtime permission for mic and storage.
-                    RequestPermissions()
+                    // Request permissions
+                       RequestPermissions()
                 }
                 isStartTVVisible = startTV.isVisible
                 isPlayTVVisible = playTV.isVisible
@@ -661,28 +664,29 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//        if (requestCode == REQUEST_CODE) {
-//            val permissionGranted = grantResults[0] == PackageManager.PERMISSION_GRANTED
-//            Toast.makeText(
-//                        requireContext(),
-//                        "Permission Granted",
-//                        Toast.LENGTH_LONG
-//                    ).show()
-//        }
-        val permissionGranted = grantResults[0] == PackageManager.PERMISSION_GRANTED
-        if (permissionGranted) {
-            Toast.makeText(
-                requireContext(),
-                "Permission Granted",
-                Toast.LENGTH_LONG
-            ).show()
-        }
-        else {
-            val fragmentManager = childFragmentManager // Replace with your FragmentManager instance
-            val dialogHome = DialogHome()
-            dialogHome.show(fragmentManager,"MyCustomFragment")
+
+        when (requestCode) {
+            PERMISSIONS_REQUEST_CODE -> {
+                // Check if all permissions are granted
+                val allPermissionsGranted = grantResults.all { it == PackageManager.PERMISSION_GRANTED }
+
+                if (allPermissionsGranted) {
+                    // Permissions granted, do whatever you want here
+                    Toast.makeText(
+                        requireContext(),
+                        "Permission Granted",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    // Permissions denied, show an error message or something
+                    val fragmentManager = childFragmentManager // Replace with your FragmentManager instance
+                    val dialogHome = DialogHome()
+                    dialogHome.show(fragmentManager,"MyCustomFragment")
+                }
+            }
         }
     }
+
 
     fun CheckPermissions(): Boolean {
 
@@ -701,7 +705,7 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
         // this method is used to request the
         // permission for audio recording and storage.
         requestPermissions(arrayOf(RECORD_AUDIO, WRITE_EXTERNAL_STORAGE),
-        REQUEST_AUDIO_PERMISSION_CODE)
+            PERMISSIONS_REQUEST_CODE)
 //        requestPermissions(arrayOf(RECORD_AUDIO),
 //            REQUEST_AUDIO_PERMISSION_CODE)
 
