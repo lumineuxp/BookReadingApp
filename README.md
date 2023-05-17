@@ -15,3 +15,4 @@ Android book reading application for kids using synthesis personalized (caretake
 
 2.อ.บรรพตรี คมขำ
 
+**ใช้คู่กับ API https://github.com/lumineuxp/flask-api_synvoice **
