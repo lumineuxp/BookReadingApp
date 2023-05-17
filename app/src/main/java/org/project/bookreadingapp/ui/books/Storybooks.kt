@@ -8,11 +8,13 @@ import android.os.Bundle
 import android.os.Environment
 import android.util.Base64
 import android.util.Log
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import org.project.bookreadingapp.Help
 import org.project.bookreadingapp.R
 import org.project.bookreadingapp.data.*
 import java.io.File
@@ -33,6 +35,7 @@ class Storybooks : AppCompatActivity() {
     lateinit var playStory:ImageButton
     lateinit var nextBtn:ImageButton
     lateinit var backBtn:ImageButton
+    lateinit var backToBook:Button
 
     lateinit var story:TextView
     var audioFiles = mutableListOf<String>()
@@ -62,6 +65,8 @@ class Storybooks : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_storybooks)
+
+        supportActionBar?.hide()
 
         val t:Intent = intent
         //component in xml
@@ -147,6 +152,12 @@ class Storybooks : AppCompatActivity() {
                 backBtn.setImageResource(R.drawable.back_blue)
                 backBtn.isEnabled = true
             }
+        }
+
+        backToBook  = findViewById(R.id.backToBook)
+        backToBook.setOnClickListener {
+
+            finish()
         }
 
     }

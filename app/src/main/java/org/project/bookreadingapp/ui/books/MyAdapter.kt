@@ -1,5 +1,6 @@
 package org.project.bookreadingapp.ui.books
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -128,6 +129,7 @@ class MyAdapter(val context: Context, val TaleList:List<Tales>) : RecyclerView.A
                         var textList = getTextList(id)
                         t.putStringArrayListExtra("textList",textList);
 
+                        dialog.dismiss()
                         context.startActivity(t)
                     }else{
                         callAPI(taleEmbed,t)

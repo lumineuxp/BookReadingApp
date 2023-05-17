@@ -54,9 +54,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:fontFamily="@font/itim"
+            android:lineSpacingExtra="8sp"
             android:text="@string/text_example_thai"
             android:textAlignment="center"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
 
     </androidx.cardview.widget.CardView>
 
@@ -77,22 +78,6 @@
     <!--        app:layout_constraintStart_toStartOf="parent"-->
     <!--        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />-->
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-
-        style="@style/CustomProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:indeterminate="false"
-        android:max="100"
-        android:minWidth="300dp"
-        android:progress="1"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
-
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewBtn"
         android:layout_width="382dp"
@@ -110,7 +95,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="25dp"
             android:background="@drawable/circle_button"
             android:contentDescription="record voice again button"
             android:src="@drawable/ic_baseline_replay_24"
@@ -120,7 +105,7 @@
             android:id="@+id/lbRecAgain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="49dp"
+            android:layout_marginStart="43dp"
             android:layout_marginTop="200dp"
             android:fontFamily="@font/itim"
             android:text="Reset"
@@ -135,7 +120,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="272dp"
+            android:layout_marginStart="277dp"
             android:background="@drawable/circle_button"
             android:contentDescription="play original voice button"
             android:src="@drawable/ic_baseline_record_voice_over_24"
@@ -145,7 +130,7 @@
             android:id="@+id/lbPlayOrg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="260dp"
+            android:layout_marginStart="265dp"
             android:layout_marginTop="200dp"
             android:fontFamily="@font/itim"
             android:text="Original voice"
@@ -258,6 +243,20 @@
 
         </androidx.cardview.widget.CardView>
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@style/CustomProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="35dp"
+            android:indeterminate="false"
+            android:max="100"
+            android:minWidth="300dp"
+            android:progress="1"
+            android:visibility="invisible"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -277,6 +276,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/itim"
+            android:shadowColor="#ffafcc"
+            android:shadowRadius="30"
             android:text="@string/status"
             android:textAlignment="center"
             android:textColor="#43258a"
