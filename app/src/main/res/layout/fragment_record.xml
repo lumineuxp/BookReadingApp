@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:fontFamily="@font/lilita_one"
+        android:text="Record and synthesize voice"
         android:textAlignment="center"
         android:textColor="#fdf4f5"
         android:textSize="25sp"
