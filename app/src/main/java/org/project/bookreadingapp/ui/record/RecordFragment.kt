@@ -76,7 +76,7 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
     private var mPlayer: MediaPlayer? = null
 
     // string variable is created for storing a file name
-    private var mFileName: String? = null
+    private var mFileName = Environment.getExternalStorageDirectory().absolutePath + "/AudioRecording.mp3"
 
     //wav in base64 create when record and use when call API
     private var wavBase64 : String? = null
@@ -275,6 +275,7 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
                     statusTV?.text = "Finished!"
                     recordAgain.isClickable = true
                     playTV.isClickable = true
+                    Log.i("play origin", "finish")
                 }
 
             }else{
@@ -284,6 +285,7 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
                 statusTV?.text = "Finished!"
                 recordAgain.isClickable = true
                 playTV.isClickable = true
+                Log.i("play origin", mFileName.toString())
             }
             isStartTVVisible = startTV.isVisible
             isPlayTVVisible = playTV.isVisible
@@ -436,8 +438,8 @@ class RecordFragment : Fragment(), MediaRecorder.OnInfoListener {
     private fun startRecording() {
         // we are here initializing our filename variable
         // with the path of the recorded audio file.
-        mFileName = Environment.getExternalStorageDirectory().absolutePath
-        mFileName += "/AudioRecording.mp3"
+//        mFileName = Environment.getExternalStorageDirectory().absolutePath
+//        mFileName += "/AudioRecording.mp3"
         //mFileName = "/sdcard/AudioRecording.mp3"
 
         // below method is used to initialize
